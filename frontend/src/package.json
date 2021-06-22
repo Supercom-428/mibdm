@@ -1,0 +1,32 @@
+{
+  "name": "frontend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm install && node ./bin/www",
+    "dev": "npm install && nodemon ./bin/www",
+    "build": "bash ./assets-build.sh"
+  },
+  "dependencies": {
+    "@coreui/coreui": "^3.0.0",
+    "admin-lte": "^3.0.4",
+    "axios": "^0.19.2",
+    "connect-redis": "^4.0.4",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "express-fileupload": "^1.1.7-alpha.3",
+    "express-session": "^1.17.1",
+    "form-data": "^3.0.0",
+    "http-errors": "~1.6.3",
+    "md5": "^2.2.1",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.3",
+    "redis": "^3.0.2",
+    "sha1": "^1.1.1",
+    "socket.io": "^2.3.0",
+    "temp-write": "^4.0.0",
+    "xmlhttprequest": "^1.8.0"
+  }
+}

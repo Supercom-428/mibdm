@@ -1,0 +1,41 @@
+<%- include('header') -%>
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table id="datatable" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <% columns.forEach(column => { %>
+                                    <td>
+                                        <input type="text" placeholder="Search '<%- column -%>'" />
+                                    </td>
+                                <% }) %>
+                            </tr>
+                            <tr>
+                            <% columns.forEach(column => { %>
+                                <th><%- column -%></th>
+                            <% }) %>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <% if (data) { %>
+                          <% data.forEach(row => { %>
+                          <tr>
+                            <% Object.values(row).forEach(cell => { %>
+                            <td><%- cell -%></td>
+                            <% }) %>
+                          </tr>
+                          <% }) %>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('footer') -%>

@@ -1,0 +1,3 @@
+global.permissions = {
+    LOGIN: 'login'
+};

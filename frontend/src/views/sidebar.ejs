@@ -1,0 +1,971 @@
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      <img src="/images/mib-logo.png" alt="AdminLTE Logo" class="brand-image elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">Draw Management</span>
+    </a>
+
+    <% if (typeof user !== "undefined") { %>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <!--         <div class="image"> -->
+        <!--           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
+        <!--         </div> -->
+        <div class="info">
+          <a href="#" class="d-block"><%- user.firstName -%> <%- user.lastName -%></a>
+        </div>
+    </div>
+
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-header">Draw Management</li>
+
+            <% if (user.permissions.indexOf('draw_entrants:read') !== -1) { %>
+                <li class="nav-item">
+                    <a href="/master-view/0" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>Master View</p>
+                    </a>
+                </li>
+            <% } %>
+            <% if (user.permissions.indexOf('import:bank-statement') !== -1) { %>
+                <li class="nav-item">
+                    <a href="/import/bank_statement" class="nav-link">
+                        <i class="nav-icon fas fa-receipt"></i>
+                        <p>Import Bank Statement</p>
+                    </a>
+                </li>
+            <% } %>
+            <% if (user.permissions.indexOf('import:payroll-report') !== -1) { %>
+                <li class="nav-item">
+                    <a href="/import/payroll_report" class="nav-link">
+                        <i class="nav-icon fas fa-money-check"></i>
+                        <p>Import Payroll Report</p>
+                    </a>
+                </li>
+            <% } %>
+                
+            <% if (user.permissions.indexOf('import:debit-report') !== -1) { %>
+                <li class="nav-item">
+                    <a href="/import/debit_report" class="nav-link">
+                        <i class="nav-icon fas fa-money-bill"></i>
+                        <p>Import Debit Report</p>
+                    </a>
+                </li>
+            <% } %>
+
+            <% if (user.permissions.indexOf('weekly_draw:create') !== -1) { %>
+                <li class="nav-item">
+                    <a href="/weekly_draw/run" class="nav-link">
+                        <i class="nav-icon fas fa-ticket-alt"></i>
+                        <p>Run Weekly Draw</p>
+                    </a>
+                </li>
+            <% } %>
+
+            <% if (user.permissions.indexOf('draw_entrants:create') !== -1) { %>
+                <li class="nav-item">
+                    <a href="/draw_entrants/create" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Add New Draw Entrant</p>
+                    </a>
+                </li>
+            <% } %>
+
+            <% if (user.permissions.indexOf('company:create') !== -1) { %>
+                <li class="nav-item">
+                    <a href="/company/create" class="nav-link">
+                        <i class="nav-icon fas fa-user-plus "></i>
+                        <p>Add New Company</p>
+                    </a>
+                </li>
+            <% } %>
+
+            <% if (user.permissions.indexOf('draw_entrants:read') !== -1) { %>
+                <li class="nav-item">
+                    <a href="/master-view/deleted/1" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>Deleted Numbers</p>
+                    </a>
+                </li>
+            <% } %>
+
+            <% if (false) { %>
+
+            <li class="nav-header">Data Management</li>
+
+            <% if (user.permissions.indexOf('draw_entrants:read') !== -1) { %>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Draw Entrants
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <% if (user.permissions.indexOf('draw_entrants:create') !== -1) { %>
+                            <li class="nav-item">
+                                <a href="/draw_entrants/add" class="nav-link">
+                                    <i class="far fa-user nav-icon"></i>
+                                    <p>Add New Entrant</p>
+                                </a>
+                            </li>
+                        <% } %>
+                        <li class="nav-item">
+                            <a href="/draw_entrants/list" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Manage Entrants</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <% } %>
+            <% if (user.permissions.indexOf('draw_entries:read') !== -1) { %>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-list-ol"></i>
+                        <p>
+                            Draw Entries
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <% if (user.permissions.indexOf('draw_entries:create') !== -1) { %>
+                            <li class="nav-item">
+                                <a href="/draw_entries/add" class="nav-link">
+                                    <i class="far fa-user nav-icon"></i>
+                                    <p>Add New Entry</p>
+                                </a>
+                            </li>
+                        <% } %>
+                        <li class="nav-item">
+                            <a href="/draw_entries/list" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Manage Draw Entries</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <% } %>
+            <% if (user.permissions.indexOf('weekly_draw:read') !== -1) { %>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-ticket-alt"></i>
+                        <p>
+                            Weekly Draws
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <% if (user.permissions.indexOf('draw_entries:create') !== -1) { %>
+                            <li class="nav-item">
+                                <a href="/weekly_draw/add" class="nav-link">
+                                    <i class="far fa-user nav-icon"></i>
+                                    <p>Add New Weekly Draw</p>
+                                </a>
+                            </li>
+                        <% } %>
+                        <li class="nav-item">
+                            <a href="/weekly_draw/list" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Manage Weekly Draws</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <% } %>
+            <% if (user.permissions.indexOf('draw_form:read') !== -1) { %>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-clipboard"></i>
+                        <p>
+                            Draw Forms
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                    <% if (user.permissions.indexOf('draw_form:create') !== -1) { %>
+                      <li class="nav-item">
+                        <a href="/draw_forms/add" class="nav-link">
+                          <i class="far fa-pencil-alt nav-icon"></i>
+                          <p>Add New Form</p>
+                        </a>
+                      </li>
+                    <% } %>
+                      <li class="nav-item">
+                        <a href="/draw_forms/list" class="nav-link">
+                          <i class="fas fa-clipboard-list nav-icon"></i>
+                          <p>Manage Forms</p>
+                        </a>
+                      </li>
+                    </ul>
+                </li>
+            <% } %>
+            <% if (user.permissions.indexOf('draw_entrant_form:read') !== -1) { %>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-clipboard-list"></i>
+                        <p>
+                            Draw Entrant Forms
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                    <% if (user.permissions.indexOf('draw_form:create') !== -1) { %>
+                      <li class="nav-item">
+                        <a href="/draw_entrant_forms/add" class="nav-link">
+                          <i class="fas fa-user-edit nav-icon"></i>
+                          <p>Add New Entrant Form</p>
+                        </a>
+                      </li>
+                    <% } %>
+                      <li class="nav-item">
+                        <a href="/draw_entrant_forms/list" class="nav-link">
+                          <i class="fas fa-clipboard-list nav-icon"></i>
+                          <p>Manage Entrant Forms</p>
+                        </a>
+                      </li>
+                    </ul>
+                </li>
+            <% } %>
+            <% if (user.permissions.indexOf('company:read') !== -1) { %>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-briefcase"></i>
+                        <p>
+                            Companies
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <% if (user.permissions.indexOf('company:create') !== -1) { %>
+                            <li class="nav-item">
+                                <a href="/company/add" class="nav-link">
+                                    <i class="fas fa-user-plus nav-icon"></i>
+                                    <p>Add New Company</p>
+                                </a>
+                            </li>
+                        <% } %>
+                        <li class="nav-item">
+                            <a href="/company/list" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Manage Companies</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <% } %>
+            <% if (user.permissions.indexOf('media:read') !== -1) { %>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-newspaper"></i>
+                        <p>
+                            Media
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <% if (user.permissions.indexOf('media:create') !== -1) { %>
+                            <li class="nav-item">
+                                <a href="/media/add" class="nav-link">
+                                    <i class="fas fa-user-plus nav-icon"></i>
+                                    <p>Add New Media</p>
+                                </a>
+                            </li>
+                        <% } %>
+                        <li class="nav-item">
+                            <a href="/media/list" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Manage Media</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <% } %>
+            <% if (user.permissions.indexOf('payment_history:read') !== -1) { %>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-file-invoice"></i>
+                        <p>
+                            Payment History
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <% if (user.permissions.indexOf('payment_history:create') !== -1) { %>
+                            <li class="nav-item">
+                                <a href="/payment_history/add" class="nav-link">
+                                    <i class="fas fa-user-plus nav-icon"></i>
+                                    <p>Add New Payment History</p>
+                                </a>
+                            </li>
+                        <% } %>
+                        <li class="nav-item">
+                            <a href="/payment_history/list" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Manage Payment History</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <% } %>
+            <% if (user.permissions.indexOf('reconciliation:read') !== -1) { %>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-briefcase"></i>
+                        <p>
+                            Reconciliation
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <% if (user.permissions.indexOf('reconciliation:create') !== -1) { %>
+                            <li class="nav-item">
+                                <a href="/reconciliation/add" class="nav-link">
+                                    <i class="fas fa-user-plus nav-icon"></i>
+                                    <p>Add New Reconciliation</p>
+                                </a>
+                            </li>
+                        <% } %>
+                        <li class="nav-item">
+                            <a href="/reconciliation/list" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Manage Reconciliation</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <% } %>
+            <% if (user.permissions.indexOf('uploaded_documents:read') !== -1) { %>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-briefcase"></i>
+                        <p>
+                            Uploaded Documents
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <% if (user.permissions.indexOf('uploaded_documents:create') !== -1) { %>
+                            <li class="nav-item">
+                                <a href="/uploaded_documents/add" class="nav-link">
+                                    <i class="fas fa-user-plus nav-icon"></i>
+                                    <p>Add New Uploaded Document</p>
+                                </a>
+                            </li>
+                        <% } %>
+                        <li class="nav-item">
+                            <a href="/uploaded_documents/list" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Manage Uploaded Documents</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <% } %>
+            <% if (user.permissions.indexOf('roles:read') !== -1) { %>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Roles
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <% if (user.permissions.indexOf('roles:create') !== -1) { %>
+                            <li class="nav-item">
+                                <a href="/roles/add" class="nav-link">
+                                    <i class="fas fa-user-plus nav-icon"></i>
+                                    <p>Add Role</p>
+                                </a>
+                            </li>
+                        <% } %>
+                        <li class="nav-item">
+                            <a href="/roles/list" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Manage Roles</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <% } %>
+            <% if (user.permissions.indexOf('users:read') !== -1) { %>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Users
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <% if (user.permissions.indexOf('users:create') !== -1) { %>
+                            <li class="nav-item">
+                                <a href="/users/add" class="nav-link">
+                                    <i class="fas fa-user-plus nav-icon"></i>
+                                    <p>Add New User</p>
+                                </a>
+                            </li>
+                        <% } %>
+                        <li class="nav-item">
+                            <a href="/users/list" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Manage Users</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <% } %>
+            <% } %>
+        </ul>
+      </nav>
+
+<!--        --><!-- Sidebar Menu -->
+<!--       <nav class="mt-2"> -->
+<!--         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"> -->
+<!--            --><!-- Add icons to the links using the .nav-icon class -->
+<!--                with font-awesome or any other icon font library -->
+<!--           <li class="nav-item has-treeview menu-open"> -->
+<!--             <a href="#" class="nav-link active"> -->
+<!--               <i class="nav-icon fas fa-tachometer-alt"></i> -->
+<!--               <p> -->
+<!--                 Dashboard -->
+<!--                 <i class="right fas fa-angle-left"></i> -->
+<!--               </p> -->
+<!--             </a> -->
+<!--             <ul class="nav nav-treeview"> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="./index.html" class="nav-link active"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Dashboard v1</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="./index2.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Dashboard v2</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="./index3.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Dashboard v3</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--             </ul> -->
+<!--           </li> -->
+<!--           <li class="nav-item"> -->
+<!--             <a href="pages/widgets.html" class="nav-link"> -->
+<!--               <i class="nav-icon fas fa-th"></i> -->
+<!--               <p> -->
+<!--                 Widgets -->
+<!--                 <span class="right badge badge-danger">New</span> -->
+<!--               </p> -->
+<!--             </a> -->
+<!--           </li> -->
+<!--           <li class="nav-item has-treeview"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="nav-icon fas fa-copy"></i> -->
+<!--               <p> -->
+<!--                 Layout Options -->
+<!--                 <i class="fas fa-angle-left right"></i> -->
+<!--                 <span class="badge badge-info right">6</span> -->
+<!--               </p> -->
+<!--             </a> -->
+<!--             <ul class="nav nav-treeview"> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/layout/top-nav.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Top Navigation</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/layout/top-nav-sidebar.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Top Navigation + Sidebar</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/layout/boxed.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Boxed</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/layout/fixed-sidebar.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Fixed Sidebar</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/layout/fixed-topnav.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Fixed Navbar</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/layout/fixed-footer.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Fixed Footer</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/layout/collapsed-sidebar.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Collapsed Sidebar</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--             </ul> -->
+<!--           </li> -->
+<!--           <li class="nav-item has-treeview"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="nav-icon fas fa-chart-pie"></i> -->
+<!--               <p> -->
+<!--                 Charts -->
+<!--                 <i class="right fas fa-angle-left"></i> -->
+<!--               </p> -->
+<!--             </a> -->
+<!--             <ul class="nav nav-treeview"> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/charts/chartjs.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>ChartJS</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/charts/flot.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Flot</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/charts/inline.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Inline</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--             </ul> -->
+<!--           </li> -->
+<!--           <li class="nav-item has-treeview"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="nav-icon fas fa-tree"></i> -->
+<!--               <p> -->
+<!--                 UI Elements -->
+<!--                 <i class="fas fa-angle-left right"></i> -->
+<!--               </p> -->
+<!--             </a> -->
+<!--             <ul class="nav nav-treeview"> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/UI/general.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>General</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/UI/icons.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Icons</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/UI/buttons.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Buttons</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/UI/sliders.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Sliders</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/UI/modals.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Modals & Alerts</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/UI/navbar.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Navbar & Tabs</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/UI/timeline.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Timeline</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/UI/ribbons.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Ribbons</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--             </ul> -->
+<!--           </li> -->
+<!--           <li class="nav-item has-treeview"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="nav-icon fas fa-edit"></i> -->
+<!--               <p> -->
+<!--                 Forms -->
+<!--                 <i class="fas fa-angle-left right"></i> -->
+<!--               </p> -->
+<!--             </a> -->
+<!--             <ul class="nav nav-treeview"> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/forms/general.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>General Elements</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/forms/advanced.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Advanced Elements</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/forms/editors.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Editors</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/forms/validation.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Validation</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--             </ul> -->
+<!--           </li> -->
+<!--           <li class="nav-item has-treeview"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="nav-icon fas fa-table"></i> -->
+<!--               <p> -->
+<!--                 Tables -->
+<!--                 <i class="fas fa-angle-left right"></i> -->
+<!--               </p> -->
+<!--             </a> -->
+<!--             <ul class="nav nav-treeview"> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/tables/simple.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Simple Tables</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/tables/data.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>DataTables</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/tables/jsgrid.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>jsGrid</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--             </ul> -->
+<!--           </li> -->
+<!--           <li class="nav-header">EXAMPLES</li> -->
+<!--           <li class="nav-item"> -->
+<!--             <a href="pages/calendar.html" class="nav-link"> -->
+<!--               <i class="nav-icon far fa-calendar-alt"></i> -->
+<!--               <p> -->
+<!--                 Calendar -->
+<!--                 <span class="badge badge-info right">2</span> -->
+<!--               </p> -->
+<!--             </a> -->
+<!--           </li> -->
+<!--           <li class="nav-item"> -->
+<!--             <a href="pages/gallery.html" class="nav-link"> -->
+<!--               <i class="nav-icon far fa-image"></i> -->
+<!--               <p> -->
+<!--                 Gallery -->
+<!--               </p> -->
+<!--             </a> -->
+<!--           </li> -->
+<!--           <li class="nav-item has-treeview"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="nav-icon far fa-envelope"></i> -->
+<!--               <p> -->
+<!--                 Mailbox -->
+<!--                 <i class="fas fa-angle-left right"></i> -->
+<!--               </p> -->
+<!--             </a> -->
+<!--             <ul class="nav nav-treeview"> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/mailbox/mailbox.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Inbox</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/mailbox/compose.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Compose</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/mailbox/read-mail.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Read</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--             </ul> -->
+<!--           </li> -->
+<!--           <li class="nav-item has-treeview"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="nav-icon fas fa-book"></i> -->
+<!--               <p> -->
+<!--                 Pages -->
+<!--                 <i class="fas fa-angle-left right"></i> -->
+<!--               </p> -->
+<!--             </a> -->
+<!--             <ul class="nav nav-treeview"> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/invoice.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Invoice</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/profile.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Profile</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/e-commerce.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>E-commerce</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/projects.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Projects</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/project-add.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Project Add</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/project-edit.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Project Edit</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/project-detail.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Project Detail</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/contacts.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Contacts</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--             </ul> -->
+<!--           </li> -->
+<!--           <li class="nav-item has-treeview"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="nav-icon far fa-plus-square"></i> -->
+<!--               <p> -->
+<!--                 Extras -->
+<!--                 <i class="fas fa-angle-left right"></i> -->
+<!--               </p> -->
+<!--             </a> -->
+<!--             <ul class="nav nav-treeview"> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/login.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Login</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/register.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Register</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/forgot-password.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Forgot Password</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/recover-password.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Recover Password</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/lockscreen.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Lockscreen</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/legacy-user-menu.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Legacy User Menu</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/language-menu.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Language Menu</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/404.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Error 404</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/500.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Error 500</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/pace.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Pace</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="pages/examples/blank.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Blank Page</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="starter.html" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Starter Page</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--             </ul> -->
+<!--           </li> -->
+<!--           <li class="nav-header">MISCELLANEOUS</li> -->
+<!--           <li class="nav-item"> -->
+<!--             <a href="https://adminlte.io/docs/3.0" class="nav-link"> -->
+<!--               <i class="nav-icon fas fa-file"></i> -->
+<!--               <p>Documentation</p> -->
+<!--             </a> -->
+<!--           </li> -->
+<!--           <li class="nav-header">MULTI LEVEL EXAMPLE</li> -->
+<!--           <li class="nav-item"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="fas fa-circle nav-icon"></i> -->
+<!--               <p>Level 1</p> -->
+<!--             </a> -->
+<!--           </li> -->
+<!--           <li class="nav-item has-treeview"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="nav-icon fas fa-circle"></i> -->
+<!--               <p> -->
+<!--                 Level 1 -->
+<!--                 <i class="right fas fa-angle-left"></i> -->
+<!--               </p> -->
+<!--             </a> -->
+<!--             <ul class="nav nav-treeview"> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="#" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Level 2</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--               <li class="nav-item has-treeview"> -->
+<!--                 <a href="#" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p> -->
+<!--                     Level 2 -->
+<!--                     <i class="right fas fa-angle-left"></i> -->
+<!--                   </p> -->
+<!--                 </a> -->
+<!--                 <ul class="nav nav-treeview"> -->
+<!--                   <li class="nav-item"> -->
+<!--                     <a href="#" class="nav-link"> -->
+<!--                       <i class="far fa-dot-circle nav-icon"></i> -->
+<!--                       <p>Level 3</p> -->
+<!--                     </a> -->
+<!--                   </li> -->
+<!--                   <li class="nav-item"> -->
+<!--                     <a href="#" class="nav-link"> -->
+<!--                       <i class="far fa-dot-circle nav-icon"></i> -->
+<!--                       <p>Level 3</p> -->
+<!--                     </a> -->
+<!--                   </li> -->
+<!--                   <li class="nav-item"> -->
+<!--                     <a href="#" class="nav-link"> -->
+<!--                       <i class="far fa-dot-circle nav-icon"></i> -->
+<!--                       <p>Level 3</p> -->
+<!--                     </a> -->
+<!--                   </li> -->
+<!--                 </ul> -->
+<!--               </li> -->
+<!--               <li class="nav-item"> -->
+<!--                 <a href="#" class="nav-link"> -->
+<!--                   <i class="far fa-circle nav-icon"></i> -->
+<!--                   <p>Level 2</p> -->
+<!--                 </a> -->
+<!--               </li> -->
+<!--             </ul> -->
+<!--           </li> -->
+<!--           <li class="nav-item"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="fas fa-circle nav-icon"></i> -->
+<!--               <p>Level 1</p> -->
+<!--             </a> -->
+<!--           </li> -->
+<!--           <li class="nav-header">LABELS</li> -->
+<!--           <li class="nav-item"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="nav-icon far fa-circle text-danger"></i> -->
+<!--               <p class="text">Important</p> -->
+<!--             </a> -->
+<!--           </li> -->
+<!--           <li class="nav-item"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="nav-icon far fa-circle text-warning"></i> -->
+<!--               <p>Warning</p> -->
+<!--             </a> -->
+<!--           </li> -->
+<!--           <li class="nav-item"> -->
+<!--             <a href="#" class="nav-link"> -->
+<!--               <i class="nav-icon far fa-circle text-info"></i> -->
+<!--               <p>Informational</p> -->
+<!--             </a> -->
+<!--           </li> -->
+<!--         </ul> -->
+<!--       </nav> -->
+      <!-- /.sidebar-menu -->
+    </div>
+    <% } %>
+    <!-- /.sidebar -->
+  </aside>

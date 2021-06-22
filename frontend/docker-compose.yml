@@ -1,0 +1,49 @@
+version: "2"
+services:
+  mib-frontend-node:
+    image: "node:10"
+    user: "node"
+    container_name: "frontend-node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+      - REDIS_URL=redis://root:3OupeeKLk%SOiKf=T+2e+T-O&AP=qSuT@frontend-redis:6379
+      - PORT=8000
+      - API_URL=http://172.17.0.1:3000
+      - REDIS_SECRET=BrthgAYslT7mh4r_u82K=6uCOGlsl=Kq
+    volumes:
+      - ./src:/home/node/app
+    ports:
+      - "8000:8000"
+    command: "npm run dev"
+    depends_on:
+      - mib-frontend-redis
+    links:
+      - mib-frontend-redis
+    stdin_open: true
+    tty: true
+    networks:
+      mib_frontend:
+        ipv4_address: 172.28.1.3
+  mib-frontend-redis:
+    image: "redis:latest"
+    command: redis-server --requirepass 3OupeeKLk%SOiKf=T+2e+T-O&AP=qSuT
+    container_name: "frontend-redis"
+    volumes:
+      - $PWD/redis-data:/var/lib/redis
+      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    expose:
+      - 6379
+#    ports:
+#      - "6379:6379"
+    networks:
+      mib_frontend:
+        ipv4_address: 172.28.1.4
+networks:
+  mib_frontend:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16

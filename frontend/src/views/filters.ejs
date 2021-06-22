@@ -1,0 +1,40 @@
+<h2>Filters</h2>
+<% filters.forEach(filter => { %>
+    <div class="filter">
+        <h4><%- filter.title -%></h4>
+        <div class="<%- filter.code -%>-options filter-options">
+            <% filter.options.forEach(option => { %>
+                <div class="filter-option">
+                    <% if (typeof option.visible !== 'undefined' && option.visible === true) { %>
+                        <button class="btn btn-lg btn-outline-success" data-filter="<%- filter.code -%>" data-filter-value="<%- option.value -%>" <% if (typeof option.columns !== 'undefined') { %> data-filter-columns="<%- JSON.stringify(option.columns); %>" <% } %>>
+                            <i class="far fa-check-square"></i> <%- option.title -%>
+                        </button>
+                    <% } else { %>
+                        <button class="btn btn-lg btn-outline-secondary" data-filter="<%- filter.code -%>" data-filter-value="<%- option.value -%>" <% if (typeof option.columns !== 'undefined') { %> data-filter-columns="<%- JSON.stringify(option.columns); %>" <% } %>>
+                            <i class="far fa-square"></i> <%- option.title -%>
+                        </button>
+                    <% } %>
+                    <% option.children.forEach(child => { %>
+                        <div class="child-options container-fluid">
+                            <div class="row">
+                            <% child.options.forEach(childOption => { %>
+                                <div class="col-xs-4">
+                                    <% if (typeof childOption.visible !== 'undefined' && childOption.visible === true) { %>
+                                        <button class="btn btn-sm btn-outline-success" data-filter="<%- filter.code -%>/<%- child.code -%>" data-filter-value="<%- childOption.value -%>" <% if (typeof childOption.columns !== 'undefined') { %> data-filter-columns="<%- JSON.stringify(childOption.columns); %>" <% } %>>
+                                            <i class="far fa-check-square"></i> <%- childOption.title -%>
+                                        </button>
+                                    <% } else { %>
+                                        <button class="btn btn-sm btn-outline-secondary" data-filter="<%- filter.code -%>/<%- child.code -%>" data-filter-value="<%- childOption.value -%>" <% if (typeof childOption.columns !== 'undefined') { %> data-filter-columns="<%- JSON.stringify(childOption.columns); %>" <% } %>>
+                                            <i class="far fa-square"></i> <%- childOption.title -%>
+                                        </button>
+                                    <% } %>
+                                </div>
+                            <% }); %>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+<% }); %>

@@ -1,0 +1,166 @@
+<%- include('header') -%>
+
+
+
+<div class="row">
+    <!-- left column -->
+    <div class="col-12">
+        <!-- general form elements -->
+        <div class="card card-primary" style="margin-top:3rem;">
+            <div class="card-header">
+                <h3 class="card-title">Add New Entrant</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" method="post" action="/draw_entrants/create">
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="companyId">Company</label>
+                        <div class="col-sm-10">
+                            <input class="typeahead form-control typeahead-companies" name="companyId" id="companyId" />
+                            <input name="companyNumber" id="companyNumber" hidden/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="first_name">First Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first_name"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="last_name">Last Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last_name"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="street1">Address Line 1</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="street1" id="street1" placeholder="street1"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="street2">Address Line 2</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="street2" id="street2" placeholder="street2"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="town">Town</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="town" id="town" placeholder="town"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="county">Country</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="county" id="county" placeholder="county"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="country_code">Country Code</label>
+                        <div class="col-sm-10">
+                            <select name="country_code" id="country_code" class="form-control">
+                                <option value="">-- Select --</option>
+                                <% countries.forEach(country => { %>
+                                    <option value="<%- country.code %>"><%- country.label %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="postcode">Postcode</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="postcode" id="postcode" placeholder="postcode"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="email">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="email"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="phone_number">Phone Number</label>
+                        <div class="col-sm-10">
+                            <input type="tel" class="form-control" name="phone_number" id="phone_number" placeholder="phone_number"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="is_form_copied_and_sent_to_business">Has the form been copied and sent to the business?</label>
+                        <div class="col-sm-10">
+                            <input type="checkbox" name="is_form_copied_and_sent_to_business" id="is_form_copied_and_sent_to_business" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="notes">Notes</label>
+                        <div class="col-sm-10">
+                            <textarea name="notes" id="notes" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="payment_method">Payment Method</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="payment_method" id="payment_method">
+                                <option value="">-- Select --</option>
+                                <% paymentMethods.forEach(paymentMethod => { %>
+                                    <option value="<%- paymentMethod.code %>"><%- paymentMethod.label %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="how_many_entries">How Many Entries</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="how_many_entries" id="how_many_entries" placeholder="how_many_entries"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="payroll_reference">Payroll Reference</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="payroll_reference" id="payroll_reference" placeholder="payroll_reference"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="payment_frequency">Payment Frequency</label>
+                        <div class="col-sm-10">
+                            <select name="payment_frequency" id="payment_frequency" class="form-control">
+                                <option value="">-- Select --</option>
+                                <% frequencies.forEach(frequency => { %>
+                                    <option value="<%- frequency.code %>"><%- frequency.label %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="balance">Balance</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" step=".01" name="balance" id="balance" value="0.00" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="is_added_to_crm">Added To CRM?</label>
+                        <div class="col-sm-10">
+                            <input type="checkbox" name="is_added_to_crm" id="is_added_to_crm" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="is_consent_given_to_contact_line_manager">Is Consent Given To Contact Line Manager</label>
+                        <div class="col-sm-10">
+                            <input type="checkbox" name="is_consent_given_to_contact_line_manager" id="is_consent_given_to_contact_line_manager" />
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+<%- include('footer') -%>

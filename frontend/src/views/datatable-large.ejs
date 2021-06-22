@@ -1,0 +1,51 @@
+<%- include('header') -%>
+
+<style>
+    .content-wrapper {
+        background: unset;
+    }
+</style>
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <table id="datatable" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <% columns.forEach(column => { %>
+                                    <td>
+                                        <% if (typeof verticalColumns === 'undefined' || verticalColumns.indexOf(column) === -1) { %>
+                                            <input class="form-control" type="text" placeholder="'<%- column -%>'" />
+                                        <% } %>
+                                    </td>
+                                <% }) %>
+                            </tr>
+                            <tr>
+                                <% columns.forEach(column => { %>
+                                    <th<% if (typeof verticalColumns !== 'undefined' && verticalColumns.indexOf(column) !== -1) { %> class="vertical-text"<% } %>><%- column -%></th>
+                                <% }) %>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (data) { %>
+                                <% data.forEach(row => { %>
+                                    <% if ( row.deleteOption == '2') { %>
+                                        <tr style="background-color: #f1aeb5;">
+                                    <% } else if ( row.deleteOption == '0') {%>
+                                        <tr style="background-color: #ffe69c;">
+                                    <% } else { %>
+                                        <tr style="background-color: #a3cfbb;">
+                                    <% } %>
+                                            <% Object.values(row).forEach(cell => { %>
+                                                <td><%- cell -%></td>
+                                            <% }) %>
+                                        </tr>
+                                <% }) %>
+                            <% } %>
+                        </tbody>
+                    </table>
+        </div>
+    </div>
+</section>
+
+<%- include('footer') -%>

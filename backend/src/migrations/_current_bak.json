@@ -1,0 +1,933 @@
+{
+    "tables": {
+        "admin_actions_log": {
+            "tableName": "admin_actions_log",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "userId": {
+                    "allowNull": false,
+                    "references": {
+                        "model": "user",
+                        "key": "id"
+                    },
+                    "field": "user_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "timestamp": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.Literal"
+                    },
+                    "field": "timestamp",
+                    "seqType": "Sequelize.DATE"
+                },
+                "description": {
+                    "allowNull": false,
+                    "field": "description",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "pageUrl": {
+                    "allowNull": false,
+                    "field": "page_url",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "requestType": {
+                    "allowNull": false,
+                    "field": "request_type",
+                    "seqType": "Sequelize.STRING(10)"
+                },
+                "data": {
+                    "allowNull": true,
+                    "field": "data",
+                    "seqType": "Sequelize.BLOB"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "company": {
+            "tableName": "company",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "name": {
+                    "allowNull": false,
+                    "unique": true,
+                    "field": "name",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "street1": {
+                    "allowNull": true,
+                    "field": "street_1",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "street2": {
+                    "allowNull": true,
+                    "field": "street_2",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "town": {
+                    "allowNull": true,
+                    "field": "town",
+                    "seqType": "Sequelize.STRING(100)"
+                },
+                "county": {
+                    "allowNull": true,
+                    "field": "county",
+                    "seqType": "Sequelize.STRING(100)"
+                },
+                "postcode": {
+                    "allowNull": true,
+                    "field": "postcode",
+                    "seqType": "Sequelize.STRING(10)"
+                },
+                "countryCode": {
+                    "allowNull": true,
+                    "field": "country_code",
+                    "seqType": "Sequelize.STRING(3)"
+                },
+                "email": {
+                    "allowNull": true,
+                    "field": "email",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "companyNumber": {
+                    "allowNull": true,
+                    "field": "company_number",
+                    "seqType": "Sequelize.STRING(10)"
+                },
+                "phoneNumber": {
+                    "allowNull": true,
+                    "field": "phone_number",
+                    "seqType": "Sequelize.STRING(60)"
+                },
+                "isPayroll": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_payroll",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "payrollReconciliationType": {
+                    "allowNull": true,
+                    "field": "payroll_reconciliation_type",
+                    "seqType": "Sequelize.STRING(20)"
+                },
+                "isSupporter": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_supporter",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "isPatron": {
+                    "allowNull": true,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_patron",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "notes": {
+                    "allowNull": true,
+                    "field": "notes",
+                    "seqType": "Sequelize.BLOB"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "draw_entrant": {
+            "tableName": "draw_entrant",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "companyId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "company",
+                        "key": "id"
+                    },
+                    "field": "company_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "firstName": {
+                    "allowNull": false,
+                    "field": "first_name",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "lastName": {
+                    "allowNull": false,
+                    "field": "last_name",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "street1": {
+                    "allowNull": false,
+                    "field": "street_1",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "street2": {
+                    "allowNull": true,
+                    "field": "street_2",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "town": {
+                    "allowNull": false,
+                    "field": "town",
+                    "seqType": "Sequelize.STRING(100)"
+                },
+                "county": {
+                    "allowNull": true,
+                    "field": "county",
+                    "seqType": "Sequelize.STRING(100)"
+                },
+                "countryCode": {
+                    "allowNull": false,
+                    "field": "country_code",
+                    "seqType": "Sequelize.STRING(3)"
+                },
+                "postcode": {
+                    "allowNull": false,
+                    "field": "postcode",
+                    "seqType": "Sequelize.STRING(10)"
+                },
+                "email": {
+                    "allowNull": true,
+                    "field": "email",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "phoneNumber": {
+                    "allowNull": true,
+                    "field": "phone_number",
+                    "seqType": "Sequelize.STRING(100)"
+                },
+                "isFormCopiedAndSentToBusiness": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_form_copied_and_sent_to_business",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "isDrawNumbersSentToEntrant": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_draw_numbers_sent_to_entrant",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "notes": {
+                    "allowNull": true,
+                    "field": "notes",
+                    "seqType": "Sequelize.BLOB"
+                },
+                "payrollReference": {
+                    "allowNull": true,
+                    "field": "payroll_reference",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "paymentFrequency": {
+                    "allowNull": false,
+                    "field": "payment_frequency",
+                    "seqType": "Sequelize.STRING(100)"
+                },
+                "paymentMethod": {
+                    "allowNull": false,
+                    "field": "payment_method",
+                    "seqType": "Sequelize.STRING(100)"
+                },
+                "balance": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "balance",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "isAddedToCrm": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_added_to_crm",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "isConsentGivenToContactLineManager": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_consent_given_to_contact_line_manager",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "status": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "status",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "draw_entrant_form": {
+            "tableName": "draw_entrant_form",
+            "schema": {
+                "formId": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "references": {
+                        "model": "draw_entrant",
+                        "key": "id"
+                    },
+                    "field": "form_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "entrantId": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "references": {
+                        "model": "draw_entrant",
+                        "key": "id"
+                    },
+                    "field": "entrant_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "dateSent": {
+                    "allowNull": true,
+                    "field": "date_sent",
+                    "seqType": "Sequelize.DATE"
+                },
+                "dateReceived": {
+                    "allowNull": true,
+                    "field": "date_received",
+                    "seqType": "Sequelize.DATE"
+                },
+                "dateCopyReturned": {
+                    "allowNull": true,
+                    "field": "date_copy_returned",
+                    "seqType": "Sequelize.DATE"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "draw_entries": {
+            "tableName": "draw_entries",
+            "schema": {
+                "entryNumber": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "entry_number",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "entrantId": {
+                    "allowNull": false,
+                    "references": {
+                        "model": "draw_entrant",
+                        "key": "id"
+                    },
+                    "field": "entrant_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "draw_form": {
+            "tableName": "draw_form",
+            "schema": {
+                "formId": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "form_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "title": {
+                    "allowNull": false,
+                    "field": "title",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "media": {
+            "tableName": "media",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "name": {
+                    "allowNull": false,
+                    "field": "name",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "contactName": {
+                    "allowNull": true,
+                    "field": "contact_name",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "contactEmail": {
+                    "allowNull": true,
+                    "field": "contact_email",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "contactNumber": {
+                    "allowNull": true,
+                    "field": "contact_number",
+                    "seqType": "Sequelize.STRING(100)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "payment_history": {
+            "tableName": "payment_history",
+            "schema": {
+                "paymentId": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "payment_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "date": {
+                    "allowNull": false,
+                    "field": "date",
+                    "seqType": "Sequelize.DATEONLY"
+                },
+                "documentId": {
+                    "allowNull": false,
+                    "references": {
+                        "model": "uploaded_documents",
+                        "key": "document_id"
+                    },
+                    "field": "document_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "description": {
+                    "allowNull": false,
+                    "field": "description",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "amount": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "amount",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "permissions": {
+            "tableName": "permissions",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "code": {
+                    "allowNull": false,
+                    "field": "code",
+                    "seqType": "Sequelize.STRING(60)"
+                },
+                "roleId": {
+                    "allowNull": false,
+                    "references": {
+                        "model": "role",
+                        "key": "id"
+                    },
+                    "field": "role_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "reconciliation": {
+            "tableName": "reconciliation",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "reference": {
+                    "allowNull": true,
+                    "field": "reference",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "name": {
+                    "allowNull": true,
+                    "field": "name",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "drawEntrantId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "draw_entrant",
+                        "key": "id"
+                    },
+                    "field": "draw_entrant_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "companyId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "company",
+                        "key": "id"
+                    },
+                    "field": "company_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "role": {
+            "tableName": "role",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "description": {
+                    "allowNull": false,
+                    "field": "description",
+                    "seqType": "Sequelize.STRING(100)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "uploaded_documents": {
+            "tableName": "uploaded_documents",
+            "schema": {
+                "documentId": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "document_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "filename": {
+                    "allowNull": false,
+                    "field": "filename",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "pathToFile": {
+                    "allowNull": false,
+                    "field": "path_to_file",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "engineId": {
+                    "allowNull": false,
+                    "field": "engine_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "user": {
+            "tableName": "user",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "username": {
+                    "allowNull": false,
+                    "unique": true,
+                    "field": "username",
+                    "seqType": "Sequelize.STRING(100)"
+                },
+                "password": {
+                    "allowNull": false,
+                    "field": "password",
+                    "seqType": "Sequelize.STRING(100)"
+                },
+                "firstName": {
+                    "allowNull": false,
+                    "field": "first_name",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "lastName": {
+                    "allowNull": false,
+                    "field": "last_name",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "emailAddress": {
+                    "allowNull": false,
+                    "field": "email_address",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "roleId": {
+                    "allowNull": false,
+                    "references": {
+                        "model": "role",
+                        "key": "id"
+                    },
+                    "field": "role_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "weekly_draw": {
+            "tableName": "weekly_draw",
+            "schema": {
+                "drawId": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "draw_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "date": {
+                    "allowNull": false,
+                    "field": "date",
+                    "seqType": "Sequelize.DATEONLY"
+                },
+                "winningEntryId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "draw_entries",
+                        "key": "entry_number"
+                    },
+                    "field": "winning_entry_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "websitePositionNumber": {
+                    "allowNull": true,
+                    "field": "website_position_number",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "isBlogAddedToWebsite": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_blog_added_to_website",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "isVideoOnYoutube": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_video_on_youtube",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "isSocialMediaPosted": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_social_media_posted",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "isPrizeMoneyPaid": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_prize_money_paid",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "isMailshotSent": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_mailshot_sent",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "isConsentSignedForPhotoAndVideo": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_consent_signed_for_photo_and_video",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "isAddedToInstagram": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "is_added_to_instagram",
+                    "seqType": "Sequelize.INTEGER(1)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "weekly_draw_entries": {
+            "tableName": "weekly_draw_entries",
+            "schema": {
+                "entryId": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "references": {
+                        "model": "draw_entries",
+                        "key": "entry_number"
+                    },
+                    "field": "entry_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "drawId": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "references": {
+                        "model": "weekly_draw",
+                        "key": "draw_id"
+                    },
+                    "field": "draw_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "status": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "0"
+                    },
+                    "field": "status",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "paymentId": {
+                    "allowNull": false,
+                    "field": "payment_id",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "weekly_draw_media": {
+            "tableName": "weekly_draw_media",
+            "schema": {
+                "mediaId": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "references": {
+                        "model": "media",
+                        "key": "id"
+                    },
+                    "field": "media_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "drawId": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "references": {
+                        "model": "weekly_draw",
+                        "key": "draw_id"
+                    },
+                    "field": "draw_id",
+                    "seqType": "Sequelize.INTEGER(11)"
+                },
+                "dateSent": {
+                    "allowNull": true,
+                    "field": "date_sent",
+                    "seqType": "Sequelize.DATEONLY"
+                },
+                "datePublished": {
+                    "allowNull": true,
+                    "field": "date_published",
+                    "seqType": "Sequelize.DATEONLY"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        }
+    },
+    "revision": 1
+}

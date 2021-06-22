@@ -1,0 +1,1507 @@
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2020 <a href="http://www.madeinbury.co.uk" target="_blank"> Made In Bury Limited</a>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 1.0.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-light">
+    <!-- Control sidebar content goes here -->
+    <div class="control-sidebar-content">
+      <div class="right-menu">
+    <% if (typeof filters !== 'undefined') { %>
+      <div class="row">
+        <div class="col-12">
+<!--          <div class="card">-->
+<!--            <div class="card-body">-->
+              <%- include('filters', {filters: filters}); -%>
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+      </div>
+    <% } %>
+      </div>
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+      <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="/plugins/chart.js/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="/plugins/sparklines/sparkline.js"></script>
+<!-- JQVMap -->
+<script src="/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="/plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="/plugins/moment/moment.min.js"></script>
+<script src="/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Summernote -->
+<script src="/plugins/summernote/summernote-bs4.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+<!-- socket.io -->
+<script src="/javascripts/socket.io.js"></script>
+<!-- handlerbars -->
+<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+<!-- typeahead -->
+<script src="http://twitter.github.com/typeahead.js/releases/latest/typeahead.bundle.min.js"></script>
+
+<% if (typeof datatable !== 'undefined') { %>
+
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
+<script>
+  $(function () {
+    // Setup - add a text input to each footer cell
+    $('#datatable thead tr:eq(0) td').each( function (i) {
+      $( 'input', this ).on( 'keyup change', function () {
+        if ( table.column(i).search() !== this.value ) {
+          table
+                  .column(i)
+                  .search( this.value )
+                  .draw();
+        }
+      } );
+    } );
+    <% if (typeof filters !== 'undefined') { %>
+
+    var filters = JSON.parse('<%- JSON.stringify(filters); %>');
+    var setChecked = function ($el) {
+      var $icon = $el.find('i');
+      $el.removeClass('btn-outline-secondary');
+      $el.addClass('btn-outline-success');
+      $icon.removeClass('fa-square');
+      $icon.addClass('fa-check-square');
+    };
+
+    var setUnchecked = function ($el) {
+      var $icon = $el.find('i');
+      $el.removeClass('btn-outline-success');
+      $el.addClass('btn-outline-secondary');
+      $icon.removeClass('fa-check-square');
+      $icon.addClass('fa-square');
+    };
+
+    var setColumnsVisibility = function (columns, flag) {
+      if (typeof columns === 'undefined' || typeof columns.length === 'undefined') {
+        return;
+      }
+
+      for (var i = 0; i < columns.length; i++) {
+        var index = columns[i];
+        var column = table.column(index);
+        column.visible(flag);
+      }
+    };
+
+    var getColumnsVisibility = function (tbl) {
+      if (typeof table === 'undefined') {
+        table = tbl;
+      }
+      var columns = {
+        visible: [],
+        hidden: [],
+      };
+      var indexes = table.columns().indexes();
+      for (var x = 0; x < indexes.length; x++) {
+        var index = indexes[x];
+        var column = table.column(index);
+        if (column.visible()) {
+          columns.visible.push(index);
+        } else {
+          columns.hidden.push(index);
+        }
+      }
+      return columns;
+    };
+
+    var showColumns = function (columns) {
+      setColumnsVisibility(columns, true);
+    };
+
+    var hideColumns = function (columns) {
+      setColumnsVisibility(columns, false);
+    };
+
+    var saveSettings = function () {
+      if (typeof this.api !== 'undefined') {
+        table = this.api();
+      }
+      var columns = getColumnsVisibility(table);
+      var pageLength = table.page.len();
+      var data = {
+        <% if (typeof settings_code !== 'undefined') { %>
+        code: "<%- settings_code %>",
+        <% } else { %>
+        code: "",
+        <% } %>
+        settings: JSON.stringify({
+          columns: columns,
+          pageLength: pageLength,
+        }),
+      };
+      $.ajax({
+        type: "POST",
+        url: "/settings/save",
+        data: data,
+        dataType: "json",
+      });
+    }
+
+    var handleBtnClick = function ($el, columns, childButtons, childButtonsContainer) {
+      var isClicked = $el.hasClass('btn-outline-success');
+      if ($el.attr('data-force-state')) {
+        isClicked = $el.attr('data-force-state') === 'show';
+        $el.removeAttr('data-force-state');
+      }
+      if (isClicked) {
+        showColumns(columns);
+      } else {
+        hideColumns(columns);
+      }
+      if (childButtons.length > 0) {
+        for (var i = 0; i < childButtons.length; i++) {
+          $(childButtons[i]).trigger('click');
+        }
+        if (childButtonsContainer.has('.btn-outline-success').length > 0) {
+          childButtonsContainer.show();
+        } else {
+          childButtonsContainer.hide();
+        }
+      } else {
+        var $parentChildOptions = $el.parents('.child-options');
+        // console.log($parentChildOptions);
+        if ($parentChildOptions.length === 1) {
+          if ($parentChildOptions.has('.btn-outline-success').length > 0) {
+            $parentChildOptions.show();
+            setChecked($parentChildOptions.prev());
+          } else {
+            $parentChildOptions.hide();
+            setUnchecked($parentChildOptions.prev());
+          }
+        }
+      }
+    };
+
+    $("button.button").click(function(){
+      var entryID = $(this).attr("id");
+      var formData = new FormData();
+      formData.set('entryId', entryID);
+      $.ajax({
+        url: '/master-view/delete',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+          res = JSON.parse(res);
+          if (res.result === false) {
+            console.log('there was an error');
+            return;
+          } 
+          $("#" + entryID).parent().parent().attr('style', 'background-color: #f1aeb5;');
+          $("#" + entryID).parent().html('2');
+        },
+      }).fail(function () {
+        console.log('there was a failure here');
+      });
+    });
+
+    var prevColumnID = "";
+    var prevRowID = "";
+    var noBtnTag = "No <button id='submit'>></button>";
+    var yesBtnTag = "Yes <button id='submit'>></button>";
+    var btnTag = " <button id='submit'>></button>";
+    $('#datatable tbody').on( 'click', 'td', function () {
+      var columnID = table.cell( this ).index().column;
+      var rowID = table.cell( this ).index().row;
+      var columns = getColumnsVisibility(table);
+
+      var url = window.location.pathname;
+      if (url == '/master-view/deleted')
+        var i = 12;
+      if (url == '/master-view')
+        var i = 13;
+      
+      for (i; i < columns.visible.length; i++) {
+        if (columnID == columns.visible[i]) {
+          console.log("old_cell : ", table.cell( prevRowID, prevColumnID ).data());
+          var oVAL = table.cell( prevRowID, prevColumnID ).data();
+          if (columnID != prevColumnID || rowID != prevRowID ) {
+            if (oVAL.search("button") != -1) {
+              alert("submit the selected cell!");
+              return;
+            }
+            if (oVAL.search("button") == -1 && oVAL.search("select") != -1) {
+              var selectedText = $('#'+ prevRowID + prevColumnID + " option:selected").html();
+              table.cell( prevRowID, prevColumnID ).data(selectedText).draw();
+            }
+          }
+          if (table.cell( this ).data() == "No" || table.cell( this ).data() == noBtnTag) { 
+            var select1 = "selected";
+            var select2 = "";
+            var dropdown = "<select id='" + rowID + columnID + "'> <option value='no' " + select1 + ">No</option> <option value='yes' " + select2 + ">Yes</option> </select>";
+            table.cell( this ).data(dropdown).draw();
+          } else if (table.cell( this ).data() == "Yes" || table.cell( this ).data() == yesBtnTag) {
+
+            var select1 = "";
+            var select2 = "selected";
+            var dropdown = "<select id='" + rowID + columnID + "'> <option value='no' " + select1 + ">No</option> <option value='yes' " + select2 + ">Yes</option> </select>";
+            table.cell( this ).data(dropdown).draw();
+          }
+          else {
+            var str = "";
+            $('#'+ rowID + columnID).change(function () {
+              $( "select option:selected" ).each(function() {
+                  str += $( this ).text();
+              });
+              table.cell( rowID, columnID ).data(str + btnTag).draw();
+            })
+            .change();
+            $('#submit').click(function () {
+              var formData = new FormData();
+              var entryID = table.cell(rowID, 0).data();
+              var date = $(table.column( columnID ).header()).text();
+              var operate = table.cell( rowID, columnID ).data().search("No") == -1 ? "Yes" : "No";
+              formData.set('entryId', entryID);
+              formData.set('date', date);
+              formData.set('operate', operate);
+              $.ajax({
+                url: '/master-view/update',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                  res = JSON.parse(res);
+                  if (res.result === false) {
+                    console.log('there was an error');
+                    return;
+                  }
+                  table.cell( rowID, columnID ).data(operate).draw();
+                },
+              }).fail(function () {
+                console.log('there was a failure here');
+              });
+            });
+          }
+          prevColumnID = columnID;
+          prevRowID = rowID;
+        }
+      }
+      
+    } );
+
+    <% } %>
+    var table = $('#datatable').DataTable({
+      "initComplete": function () {
+        var row = $('<div/>').addClass('row');
+        var col = $('<div/>').addClass('col-12');
+        col.append($('<h2/>').html('Table Options'));
+        jQuery(".dataTables_length").detach().appendTo(col);
+        col.appendTo(row);
+        row.prependTo('.right-menu')
+      },
+      <% if (typeof filters !== 'undefined') { %>
+      "drawCallback": saveSettings,
+      <% } %>
+      "processing": true,
+      "paging": true,
+      <% if (typeof defaultSettings !== 'undefined' && typeof defaultSettings.pageLength !== 'undefined') { %>
+      "pageLength": <%- defaultSettings.pageLength %>,
+      <% } %>
+      "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+      "searching": true,
+      "ordering": true,
+      "order": [
+              [<%= sort_column %>, "<%= sort_direction %>"]
+      ],
+      "info": true,
+      "autoWidth": false,
+      "responsive": false,
+      "dom": "Bfrtip",
+      "buttons": [
+        {
+          extend: "excelHtml5",
+          <% if (typeof export_filename !== 'undefined') { %>
+          filename: "<%= export_filename %>",
+          <% } else { %>
+          filename: "export",
+          <% } %>
+          title: "<%= title%>",
+          className: "btn btn-outline-secondary",
+          exportOptions: {
+            columns: ':visible'
+          }
+        },
+        {
+          extend: "csvHtml5",
+          <% if (typeof export_filename !== 'undefined') { %>
+          filename: "<%= export_filename %>",
+          <% } else { %>
+          filename: "export",
+          <% } %>
+          className: "btn btn-outline-secondary",
+          exportOptions: {
+            columns: ':visible'
+          }
+        },
+      ],
+      <% if (typeof defaultSettings !== 'undefined' && typeof defaultSettings.columns !== 'undefined') { %>
+      "columnDefs":[
+        <% if (typeof defaultSettings.columns.visible !== 'undefined') { %>
+        {
+          "targets": <%- JSON.stringify(defaultSettings.columns.visible) %>,
+          "visible": true,
+        },
+        <% } %>
+        <% if (typeof defaultSettings.columns.hidden !== 'undefined') { %>
+        {
+          "targets": <%- JSON.stringify(defaultSettings.columns.hidden) %>,
+          "visible": false,
+        },
+        <% } %>
+      ]
+      <% } %>
+    });
+    <% if (typeof filters !== 'undefined') { %>
+
+    $('.filter-option .btn').each(function(){
+      var code = $(this).attr('data-filter');
+      var value = $(this).attr('data-filter-value');
+      var columns = $(this).attr('data-filter-columns') ? JSON.parse($(this).attr('data-filter-columns')) : [];
+      var childButtonsContainer = null;
+      var childButtons = [];
+      if ($(this).next().hasClass('child-options')) {
+        childButtonsContainer = $(this).next();
+        var btns = childButtonsContainer.find('.btn-sm');
+        for (var x = 0; x < btns.length; x++) {
+          if ($(btns[x]).hasClass('btn-sm')) {
+            childButtons.push($(btns[x]));
+          }
+        }
+      }
+
+      // run the handle on load
+      handleBtnClick($(this), columns, childButtons, childButtonsContainer);
+
+      $(this).on('click', function (e) {
+        var $el = $(this);
+        e.preventDefault();
+        var isCurrentlyClicked = $el.hasClass('btn-outline-success');
+        var forceState = $el.attr('data-force-state');
+        if (forceState === 'hide') {
+          isCurrentlyClicked = true;
+        }
+        if (forceState === 'show') {
+          isCurrentlyClicked = false;
+        }
+        // console.log(forceState);
+        if (isCurrentlyClicked) {
+          setUnchecked($el);
+        } else {
+          setChecked($el);
+        }
+
+        if (childButtons.length > 0) {
+          var childState = isCurrentlyClicked ? 'hide' : 'show';
+          for (var i = 0; i < childButtons.length; i++) {
+            $(childButtons[i]).attr('data-force-state', childState);
+          }
+        }
+        handleBtnClick($el, columns, childButtons, childButtonsContainer);
+        saveSettings();
+      });
+    })
+    <% } %>
+  });
+</script>
+<% } %>
+
+<% if (typeof draw !== 'undefined') { %>
+  <script>
+  $(function(){
+    $('.btn.run-draw').on('click', function(e) {
+      $btn = $(this);
+      e.preventDefault();
+
+      var formData = new FormData();
+      formData.append('drawId', <%- draw.drawId %>);
+      $.ajax({
+        type: 'post',
+        url: '/weekly_draw/run',
+        <!--data: {-->
+        <!--  drawId: <%- draw.drawId %>-->
+        <!--},-->
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (r,e,s) {
+          var data = JSON.parse(r);
+          console.log(data);
+          var template = Handlebars.compile(
+                  "<h1>Draw Winner</h1>" +
+                  "<table class='table'>" +
+                  "<tbody>" +
+                  "<tr><th>Draw Date:</th><td>{{date}}</td></tr>" +
+                  "<tr><th>Winning Number:</th><td>{{winningEntryId}}</td></tr>" +
+                  "<tr><th>First Name:</th><td>{{winningEntry.drawEntrant.firstName}}</td></tr>" +
+                  "<tr><th>Last Name:</th><td>{{winningEntry.drawEntrant.lastName}}</td></tr>" +
+                  "<tr><th>Address:</th><td>{{winningEntry.drawEntrant.street1}}<br>{{winningEntry.drawEntrant.street2}}<br>{{winningEntry.drawEntrant.town}}<br>{{winningEntry.drawEntrant.county}}<br>{{winningEntry.drawEntrant.postcode}}</td></tr>" +
+                  "<tr><th>Email:</th><td>{{winningEntry.drawEntrant.email}}</td></tr>" +
+                  "<tr><th>Phone Number:</th><td>{{winningEntry.drawEntrant.phoneNumber}}</td></tr>" +
+                  "<tr><th>Consent to contact line manager:</th><td>{{#if winningEntry.drawEntrant.isConsentGivenToContactLineManager}}Yes{{else}}No{{/if}}</td></tr>" +
+                  "</tbody>" +
+                  "</table>"
+          )
+          var $container = $btn.parent();
+          var $drawSummary = $('<div/>');
+          $drawSummary.html(template(data.draw))
+          // render template
+          $container.replaceWith($drawSummary);
+        }
+      });
+    });
+  })
+</script>
+<% } %>
+
+<% if (typeof customJs !== 'undefined' && customJs === 'new_entrant_form') { %>
+<script>
+
+  var companies = JSON.parse('<%- JSON.stringify(companies) %>');
+  var companiesBloodhound = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    identify: function(obj) { return obj.id; },
+    local: companies
+  });
+
+  $(function() {
+    $('.typeahead-companies').typeahead({
+      hint: false,
+      highlight: true,
+      minLength: 3,
+    }, {
+      name: 'companies',
+      display: 'name',
+      source: companiesBloodhound,
+    });
+  });
+
+  $('.typeahead').on('typeahead:select', function (e, datum) {
+    console.log("datum : ",datum);
+    $('#companyNumber').attr('value', datum.id);
+  });
+
+</script>
+<% } %>
+
+<% if (typeof customJs !== 'undefined' && customJs === 'bank_statement_upload') { %>
+  <script>
+    var drawEntrants = JSON.parse('<%- JSON.stringify(drawEntrants) %>');
+    var entrantsBloodhound = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      identify: function(obj) { return obj.id; },
+      local: drawEntrants
+    });
+    var companies = JSON.parse('<%- JSON.stringify(companies) %>');
+    var companiesBloodhound = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      identify: function(obj) { return obj.id; },
+      local: companies
+    });
+
+    $(function(){
+      Handlebars.registerHelper('ifEqual', function (v1, v2, options) {
+        if (v1 === v2) {
+          return options.fn(this);
+        }
+        return options.inverse(this);
+      });
+
+      Handlebars.registerHelper('toJSON', function(object){
+        return new Handlebars.SafeString(JSON.stringify(object));
+      });
+
+      Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+
+        switch (operator) {
+          case '==':
+            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+          case '===':
+            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+          case '!=':
+            return (v1 != v2) ? options.fn(this) : options.inverse(this);
+          case '!==':
+            return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+          case '<':
+            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+          case '<=':
+            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+          case '>':
+            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+          case '>=':
+            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+          case '&&':
+            return (v1 && v2) ? options.fn(this) : options.inverse(this);
+          case '||':
+            return (v1 || v2) ? options.fn(this) : options.inverse(this);
+          default:
+            return options.inverse(this);
+        }
+      });
+
+      Handlebars.registerHelper('arrayToList', function(array, key) {
+        var data = array;
+        if (typeof key === 'string') {
+          data = [];
+          array.forEach(function (row) {
+            data.push(row[key]);
+          });
+        }
+        if (data.length === 0) return '';
+        var string = '<ul>';
+        data.forEach(function (val) {
+          string += '<li>' + val + '</li>';
+        })
+        string += '</ul>';
+        return new Handlebars.SafeString(string);
+      });
+
+
+      Handlebars.registerHelper('arrayToJson', function(array, key) {
+        var string = JSON.stringify(array);
+        return new Handlebars.SafeString(string);
+      });
+
+      var matchedEntrantsTable = Handlebars.compile(
+              "<table class='table'>" +
+              "<thead>" +
+              "<tr>" +
+              "<th scope='col'>Date</th>" +
+              "<th scope='col'>Amount</th>" +
+              "<th scope='col'>Reference</th>" +
+              "<th scope='col'>Name</th>" +
+              "<th scope='col'>Entrant Name</th>" +
+              "<th scope='col'>Entrant Email</th>" +
+              "<th scope='col'></th>" +
+              "</tr>" +
+              "</thead>" +
+              "<tbody>" +
+              "</tbody>" +
+              "</table>"
+      );
+
+      var matchedEntrantsRow = Handlebars.compile(
+              "<tr>" +
+              "<input type='hidden' name='entrants[document_id][{{index}}]' value='{{documentId}}'>" +
+              "<td>{{row.Date}}<input type='hidden' name='entrants[date][{{index}}]' value='{{row.Date}}'></td>" +
+              "<td>{{row.[Money in]}}<input type='hidden' name='entrants[amount][{{index}}]' value='{{row.[Money in]}}'></td>" +
+              "<td>{{match.reference}}<input type='hidden' name='entrants[reference][{{index}}]' value='{{match.reference}}'></td>" +
+              "<td>{{match.name}}<input type='hidden' name='entrants[name][{{index}}]' value='{{match.name}}'></td>" +
+              "<td>{{match.drawEntrant.firstName}} {{match.drawEntrant.lastName}}<input type='hidden' name='entrants[draw_entrant][{{index}}]' value='{{match.drawEntrantId}}'></td>" +
+              "<td>{{match.drawEntrant.email}}</td>" +
+              "<td><button class='btn btn-xs btn-outline-primary unmatch' data-row='{{toJSON row}}' data-document-id='{{documentId}}' data-reference='{{match.reference}}' data-name='{{match.name}}'>unmatch</button></td>" +
+              "</tr>"
+      );
+
+      var matchedEntrantsRow_Payroll = Handlebars.compile(
+              "<tr>" +
+              "<input type='hidden' name='entrants[document_id][{{index}}]' value='{{documentId}}'>" +
+              "<td>{{row.Date}}<input type='hidden' name='entrants[date][{{index}}]' value='{{row.Date}}'></td>" +
+              "<td>{{row.[Money in]}}<input type='hidden' name='entrants[amount][{{index}}]' value='{{row.[Money in]}}'></td>" +
+              "<td>{{match.payrollReference}}<input type='hidden' name='entrants[reference][{{index}}]' value='{{match.payrollReference}}'></td>" +
+              "<td>{{row.Name}}<input type='hidden' name='entrants[name][{{index}}]' value='{{row.Name}}'></td>" +
+              "<td>{{match.firstName}} {{match.lastName}}<input type='hidden' name='entrants[draw_entrant][{{index}}]' value='{{match.id}}'></td>" +
+              "<td>{{match.email}}</td>" +
+              "<td><button class='btn btn-xs btn-outline-primary unmatch' data-row='{{toJSON row}}' data-document-id='{{documentId}}' data-reference='{{match.payrollReference}}' data-name='{{match.firstName}}:{{match.lastName}}'>unmatch</button></td>" +
+              "</tr>"
+      );
+
+      var matchedEntrantsRow_Debit = Handlebars.compile(
+              "<tr>" +
+              "<input type='hidden' name='entrants[document_id][{{index}}]' value='{{documentId}}'>" +
+              "<td>{{row.Date}}<input type='hidden' name='entrants[date][{{index}}]' value='{{row.Date}}'></td>" +
+              "<td>{{row.[Money in]}}<input type='hidden' name='entrants[amount][{{index}}]' value='{{row.[Money in]}}'></td>" +
+              "<td>{{match.payrollReference}}<input type='hidden' name='entrants[reference][{{index}}]' value='{{match.payrollReference}}'></td>" +
+              "<td>{{row.Name}}<input type='hidden' name='entrants[name][{{index}}]' value='{{row.Name}}'></td>" +
+              "<td>{{match.firstName}} {{match.lastName}}<input type='hidden' name='entrants[draw_entrant][{{index}}]' value='{{match.Id}}'></td>" +
+              "<td>{{match.email}}</td>" +
+              "<td><button class='btn btn-xs btn-outline-primary unmatchEDebit' data-row='{{toJSON row}}' data-document-id='{{documentId}}' data-reference='{{reference}}' data-name='{{name}}'>unmatch</button></td>" +
+              "</tr>"
+      );
+
+
+      var matchedCompaniesTable = Handlebars.compile(
+              "<table class='table'>" +
+              "<thead>" +
+              "<tr>" +
+              "<th scope='col'>Date</th>" +
+              "<th scope='col'>Amount</th>" +
+              "<th scope='col'>Reference</th>" +
+              "<th scope='col'>Company Name</th>" +
+              "<th scope='col'></th>" +
+              "</tr>" +
+              "</thead>" +
+              "<tbody>" +
+              "</tbody>" +
+              "</table>"
+      );
+
+      var matchedCompaniesRow = Handlebars.compile(
+              "<tr>" +
+              "<input type='hidden' name='entrants[document_id][{{index}}]' value='{{row.documentId}}'>" +
+              "<td>{{row.Date}}<input type='hidden' name='companies[date][{{index}}]' value='{{row.Date}}'></td>" +
+              "<td>{{row.[Money in]}}<input type='hidden' name='companies[amount][{{index}}]' value='{{row.[Money in]}}'></td>" +
+              "<td>{{match.reference}}<input type='hidden' name='companies[reference][{{index}}]' value='{{match.reference}}'></td>" +
+              "<td>{{match.company.name}}</td><input type='hidden' name='companies[name][{{index}}]' value='{{match.company.name}}'>" +
+              "<input type='hidden' name='companies[company][{{index}}]' value='{{match.company.id}}'>" +
+              "<td><button class='btn btn-xs btn-outline-primary unmatch' data-row='{{toJSON row}}' data-document-id='{{documentId}}' data-reference='{{match.reference}}' data-name='{{match.name}}'>unmatch</button></td>" +
+              "</tr>"
+      );
+
+      var matchedCompaniesRow_payroll = Handlebars.compile(
+              "<tr>" +
+              "<input type='hidden' name='entrants[document_id][{{index}}]' value='{{row.documentId}}'>" +
+              "<td>{{row.Date}}<input type='hidden' name='companies[date][{{index}}]' value='{{row.Date}}'></td>" +
+              "<td>{{row.[Money in]}}<input type='hidden' name='companies[amount][{{index}}]' value='{{row.[Money in]}}'></td>" +
+              "<td>{{match.payrollReference}}<input type='hidden' name='companies[reference][{{index}}]' value='{{match.payrollReference}}'></td>" +
+              "<td>{{match.company.name}}</td><input type='hidden' name='companies[name][{{index}}]' value='{{match.company.name}}'>" +
+              "<input type='hidden' name='companies[company][{{index}}]' value='{{match.company.id}}'>" +
+              "<td><button class='btn btn-xs btn-outline-primary unmatchCPayroll' data-row='{{toJSON row}}' data-document-id='{{documentId}}' data-reference='{{reference}}' data-name='{{name}}'>unmatch</button></td>" +
+              "</tr>"
+      );
+
+      var unmatchedTable = Handlebars.compile(
+              "<p>If the payment is for an individual entrant, match to a draw entrant.</p>" +
+              "<p>If the payment is from a company for payroll, match to a company.</p>" +
+              "<table class='table'>" +
+              "<thead>" +
+              "<tr>" +
+              "<th scope='col'>Date</th>" +
+              "<th scope='col'>Amount</th>" +
+              "<th scope='col'>Reference</th>" +
+              "<th scope='col'>Name</th>" +
+              "<th scope='col'>Entrant</th>" +
+              "<th scope='col'>Company</th>" +
+              "<th scope='col'></th>" +
+              "</tr>" +
+              "</thead>" +
+              "<tbody>" +
+              "</tbody>" +
+              "</table>"
+      );
+
+      var unmatchedRow = Handlebars.compile(
+              "<tr>" +
+              "<td>{{row.Date}}</td>" +
+              "<td>{{row.[Money in]}}</td>" +
+              "<td>{{reference}}</td>" +
+              "<td>{{name}}</td>" +
+              "<td><span class='typeahead-entrants'></span></td>" +
+              "<td><span class='typeahead-companies'></span></td>" +
+              "<td><button class='btn btn-xs btn-outline-primary match' data-row='{{toJSON row}}' data-document-id='{{documentId}}' data-reference='{{reference}}' data-name='{{name}}'>Match</button></td>" +
+              "</tr>"
+      );
+
+      var unmatchedRow_payroll = Handlebars.compile(
+              "<tr>" +
+              "<td>{{row.Date}}</td>" +
+              "<td>{{row.[Money in]}}</td>" +
+              "<td>{{reference}}</td>" +
+              "<td>{{name}}</td>" +
+              "<td><span class='typeahead-entrants'></span></td>" +
+              "<td hidden><span class='typeahead-companies'></span></td>" +
+              "<td><button class='btn btn-xs btn-outline-primary match' data-row='{{toJSON row}}' data-document-id='{{documentId}}' data-reference='{{reference}}' data-name='{{name}}'>Match</button></td>" +
+              "</tr>"
+      );
+
+      var ignoredTable = Handlebars.compile(
+              "<table class='table'>" +
+              "<thead>" +
+              "<tr>" +
+              "<th scope='col'>Date</th>" +
+              "<th scope='col'>Amount</th>" +
+              "<th scope='col'>Description</th>" +
+              "</tr>" +
+              "</thead>" +
+              "<tbody>" +
+              "</tbody>" +
+              "</table>"
+      );
+
+      var ignoredRow = Handlebars.compile(
+              "<tr>" +
+              "<td>{{row.Date}}</td>" +
+              "<td>{{row.[Money in]}}</td>" +
+              "<td>{{row.Description}}</td>" +
+              "</tr>"
+      );
+
+      var failedTable = Handlebars.compile(
+              "<table class='table'>" +
+              "<thead>" +
+              "<tr>" +
+              "<th scope='col'>Date</th>" +
+              "<th scope='col'>Amount</th>" +
+              "<th scope='col'>Description</th>" +
+              "</tr>" +
+              "</thead>" +
+              "<tbody>" +
+              "</tbody>" +
+              "</table>"
+      );
+
+      var failedRow = Handlebars.compile(
+              "<tr>" +
+              "<td>{{row.Date}}</td>" +
+              "<td>{{row.[Money in]}}</td>" +
+              "<td>{{row.Description}}</td>" +
+              "</tr>"
+      );
+
+      var modalTpl = Handlebars.compile(
+                "<div class='modal-dialog modal-dialog-centered' role='document'>" +
+                  "<div class='modal-content'>" +
+                    "<div class='modal-header'>" +
+                      "<h5 class='modal-title' id='import-progress-title'>Import Progress</h5>" +
+                    "</div>" +
+                    "<div class='modal-body'>" +
+                      "<h1>Processing: <span class='processed'>{{totals.processed}}</span> / <span class='total'>{{totals.total}}</span></h1>" +
+                      "<h4>Matched Entrants: <span class='matched-entrants'>{{totals.matchedEntrants}}</span></h4>" +
+                      "<h4>Matched Companies: <span class='matched-companies'>{{totals.matchedCompanies}}</span></h4>" +
+                      "<h4>Unmatched: <span class='unmatched'>{{totals.unmatched}}</span></h4>" +
+                      "<h4>Ignored: <span class='ignored'>{{totals.ignored}}</span></h4>" +
+                      "<h4>Failed to process: <span class='failed'>{{totals.failed}}</span></h4>" +
+                    "</div>" +
+                    "{{#ifEqual totals.processed totals.total}}" +
+                    "<div class='modal-footer'>" +
+                      "<button class='btn btn-success' data-dismiss='modal'>Review Results</button>" +
+                    "</div>" +
+                    "{{/ifEqual}}" +
+                  "</div>" +
+                "</div>"
+      );
+
+      var enteredTable = Handlebars.compile(
+              "<table class='table'>" +
+              "<thead>" +
+              "<tr>" +
+              "<th scope='col'>Payment Date</th>" +
+              "<th scope='col'>Payment Amount</th>" +
+              "<th scope='col'>Draw Entry Number</th>" +
+              "<th scope='col'>Draw Entrant</th>" +
+              "<th scope='col'>Dates Entered</th>" +
+              "<th scope='col'>Dates Not Entered</th>" +
+              "<th scope='col'></th>" +
+              "</tr>" +
+              "</thead>" +
+              "<tbody>" +
+              "</tbody>" +
+              "</table>"
+      );
+
+      var enteredRow = Handlebars.compile(
+              "<tr>" +
+              "<td>{{date}}</td>" +
+              "<td>{{amount}}</td>" +
+              "<td>{{drawEntry.entryNumber}}</td>" +
+              "<td>{{entrant.firstName}} {{entrant.lastName}}</td>" +
+              "<td>{{arrayToList datesEntered}}</td>" +
+              "<td>{{arrayToList datesNotEntered}}</td>" +
+              "<td>[calendar]</td>" +
+              "</tr>"
+      );
+
+      var unenteredTable = Handlebars.compile(
+              "<table class='table'>" +
+              "<thead>" +
+              "<tr>" +
+              "<th scope='col'>Payment Date</th>" +
+              "<th scope='col'>Payment Amount</th>" +
+              "<th scope='col'>Draw Entry Number</th>" +
+              "<th scope='col'>Draw Entrant</th>" +
+              "<th scope='col'>Dates</th>" +
+              "</tr>" +
+              "</thead>" +
+              "<tbody>" +
+              "</tbody>" +
+              "</table>"
+      );
+
+      var unenteredRow = Handlebars.compile(
+              "<tr>" +
+              "<input type='hidden' name='entries[document_id][{{index}}]' value='{{document_id}}'>" +
+              "<td>{{date}}<input type='hidden' name='entries[payment_date][{{index}}]' value='{{date}}'></td>" +
+              "<td>{{amount}}<input type='hidden' name='entries[amount][{{index}}]' value='{{amount}}'></td>" +
+              "<td>{{drawEntry.entryNumber}}<input type='hidden' name='entries[entry_number][{{index}}]' value='{{drawEntry.entryNumber}}'></td>" +
+              "<td>{{entrant.firstName}} {{entrant.lastName}}</td>" +
+              "<td>{{arrayToList dates}}<input type='hidden' name='entries[draw_dates][{{index}}]' value='{{arrayToJson dates}}'></td>" +
+              "</tr>"
+      );
+
+      var unexpectedTable = Handlebars.compile(
+              "<table class='table'>" +
+              "<thead>" +
+              "<tr>" +
+              "<th scope='col'>Payment Date</th>" +
+              "<th scope='col'>Payment Amount</th>" +
+              "<th scope='col'>Draw Entry Numbers</th>" +
+              "<th scope='col'>Draw Entrant</th>" +
+              "<th scope='col'>Action</th>" +
+              "</tr>" +
+              "</thead>" +
+              "<tbody>" +
+              "</tbody>" +
+              "</table>"
+      );
+
+      var unexpectedRow = Handlebars.compile(
+              "<tr>" +
+              "<td>{{date}}</td>" +
+              "<td>{{amount}}</td>" +
+              "<td>{{arrayToList entrant.drawEntries 'entryNumber'}}</td>" +
+              "<td>{{entrant.firstName}} {{entrant.lastName}}</td>" +
+              "<td>[action]</td>" +
+              "</tr>"
+      );
+
+      var successfulEntriesTable = Handlebars.compile(
+              "<table class='table'>" +
+              "<thead>" +
+              "<tr>" +
+              "<th scope='col'>Payment Date</th>" +
+              "<th scope='col'>Payment Amount</th>" +
+              "<th scope='col'>Draw Entry Number</th>" +
+              "<th scope='col'>Draw Entrant</th>" +
+              "<th scope='col'>Dates</th>" +
+              "</tr>" +
+              "</thead>" +
+              "<tbody>" +
+              "</tbody>" +
+              "</table>"
+      );
+
+      var successfulEntriesRow = Handlebars.compile(
+              "<tr>" +
+              "<td>{{row.payment_date}}</td>" +
+              "<td>{{row.amount}}</td>" +
+              "<td>{{entry.entryNumber}}</td>" +
+              "<td>{{entry.drawEntrant.firstName}} {{entry.drawEntrant.lastName}}</td>" +
+              "<td>{{arrayToList dates}}</td>" +
+              "</tr>"
+      );
+
+      var failedEntriesTable = Handlebars.compile(
+              "<table class='table'>" +
+              "<thead>" +
+              "<tr>" +
+              "<th scope='col'>Payment Date</th>" +
+              "<th scope='col'>Payment Amount</th>" +
+              "<th scope='col'>Draw Entry Number</th>" +
+              "<th scope='col'>Draw Entrant</th>" +
+              "<th scope='col'>Dates</th>" +
+              "</tr>" +
+              "</thead>" +
+              "<tbody>" +
+              "</tbody>" +
+              "</table>"
+      );
+
+      var failedEntriesRow = Handlebars.compile(
+              "<tr>" +
+              "<td>{{row.payment_date}}</td>" +
+              "<td>{{row.amount}}</td>" +
+              "<td>{{entry.entryNumber}}</td>" +
+              "<td>{{entry.drawEntrant.firstName}} {{entry.drawEntrant.lastName}}</td>" +
+              "<td>{{arrayToList dates}}</td>" +
+              "</tr>"
+      );
+
+      // var $container = $btn.parent();
+      // var $drawSummary = $('<div/>');
+      // $drawSummary.html(template(data.draw))
+      // // render template
+      // $container.replaceWith($drawSummary);
+
+      var typeahead = function () {
+            var $entrantsTypeahead = $('<input/>').addClass('typeahead').addClass('entrants-typeahead').addClass('form-control').attr('type', 'text').attr('placeholder', 'Draw Entrant...');
+            $('.typeahead-entrants').replaceWith($entrantsTypeahead);
+            $('.entrants-typeahead').typeahead({
+              hint: false,
+              highlight: true,
+              minLength: 3,
+            }, {
+              name: 'drawEntrants',
+              display: 'name',
+              source: entrantsBloodhound,
+            });
+            var $companiesTypeahead = $('<input/>').addClass('typeahead').addClass('companies-typeahead').addClass('form-control').attr('type', 'text').attr('placeholder', 'Company...');
+            $('.typeahead-companies').replaceWith($companiesTypeahead);
+            $('.companies-typeahead').typeahead({
+              hint: false,
+              highlight: true,
+              minLength: 3,
+            }, {
+              name: 'companies',
+              display: 'name',
+              source: companiesBloodhound,
+            });
+            $('.typeahead').on('typeahead:select', function (e, datum) {
+              $(this).attr('data-value', datum.id);
+              console.log($(this));
+              console.log(datum);
+            });
+      };
+
+      var renderModal = function (totals) {
+
+        var $modal = $('#import-progress');
+        if ($modal.length === 0) {
+          //   $modal.html(modalTpl({totals: totals})).modal('show');
+          //   return false;
+          // }
+          $modal = $('<div/>').addClass('modal-fade').attr('id', 'import-progress').attr('tabindex', '-1').attr('role', 'dialog').attr('aria-labelledby', 'import-progress').attr('aria-hidden', 'true');
+          $modal.prependTo('body');
+          $modal.modal({
+            show: true,
+            backdrop: 'static',
+            keyboard: false,
+          });
+          $modal.on('hidden.bs.modal', function (e) {
+            $(this).data('bs.modal', null);
+            $('.row.upload').remove();
+            var $entrantsTypeahead = $('<input/>').addClass('typeahead').addClass('entrants-typeahead').addClass('form-control').attr('type', 'text').attr('placeholder', 'Draw Entrant...');
+            $('.typeahead-entrants').replaceWith($entrantsTypeahead);
+            $('.entrants-typeahead').typeahead({
+              hint: false,
+              highlight: true,
+              minLength: 3,
+            }, {
+              name: 'drawEntrants',
+              display: 'name',
+              source: entrantsBloodhound,
+            });
+            var $companiesTypeahead = $('<input/>').addClass('typeahead').addClass('companies-typeahead').addClass('form-control').attr('type', 'text').attr('placeholder', 'Company...');
+            $('.typeahead-companies').replaceWith($companiesTypeahead);
+            $('.companies-typeahead').typeahead({
+              hint: false,
+              highlight: true,
+              minLength: 3,
+            }, {
+              name: 'companies',
+              display: 'name',
+              source: companiesBloodhound,
+            });
+            $('.typeahead').on('typeahead:select', function (e, datum) {
+              $(this).attr('data-value', datum.id);
+              console.log($(this));
+              console.log(datum);
+            });
+
+            $('button.match').on('click', function (e) {
+              var $el = $(this);
+              var entrantId = $el.parent().prev().prev().find('[data-value]').attr('data-value');
+              var companyId = $el.parent().prev().find('[data-value]').attr('data-value');
+
+              var date = $el.parent().parent().find('td:nth-of-type(1)').html();
+              var amount = $el.parent().parent().find('td:nth-of-type(2)').html();
+
+              var $row = $el.parent().parent();
+              e.preventDefault();
+              var formData = new FormData();
+
+              var reference = $(this).attr('data-reference');
+              var name = $(this).attr('data-name');
+
+              var documentId = $(this).attr('data-document-id');
+
+              formData.set('entrantId', entrantId === undefined ? null : entrantId);
+              formData.set('companyId', companyId === undefined ? null : companyId);
+              formData.set('row', $(this).attr('data-row'));
+              formData.set('documentId', documentId);
+              formData.set('reference', reference);
+              formData.set('name', name);
+
+              var url = window.location.pathname;
+              if (url == '/import/payroll_report')
+                var path = '/import/match_payroll';
+              if (url == '/import/bank_statement')
+                var path = '/import/match';
+              if (url == '/import/debit_report')
+                var path = '/import/match_debit';
+              console.log("path :", path);
+              $.ajax({
+                url: path,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                  res = JSON.parse(res);
+                  if (res.result === false) {
+                    console.log('there was an error');
+                    return;
+                  }
+                  var data = res.data;
+                  console.log(data.match);
+                  if (path == '/import/match_payroll' && data.match.id > 0){
+                    renderTable('matched-entrants');
+                    renderRow('matched-entrants', {
+                      row: {
+                        Date: date,
+                        'Money in': amount,
+                        documentId: documentId,
+                        Name: name
+                      },
+                      match: data.match,
+                    });
+                  } else if (path == '/import/match' && data.match.drawEntrantId > 0 || path == '/import/match_debit' && data.match.drawEntrantId > 0) {
+                    renderTable('matched-entrants');
+                    renderRow('matched-entrants', {
+                      row: {
+                        Date: date,
+                        'Money in': amount,
+                        documentId: documentId
+                      },
+                      match: data.match,
+                    });
+                  } else {
+                    renderTable('matched-companies');
+                    renderRow('matched-companies', {
+                      row: {
+                        Date: date,
+                        'Money in': amount,
+                        documentId: documentId
+                      },
+                      match: data.match,
+                    });
+                  }
+                  $row.remove();
+                  const totals = collectTotals();
+                  updateTotals(totals);
+                },
+              }).fail(function () {
+                console.log('there was a failure here');
+              });
+            });
+
+            $('button.unmatch').on('click', function (e) {
+              var $el = $(this);
+              // var entrantId = $el.parent().prev().prev().find('[data-value]').attr('data-value');
+              // var companyId = $el.parent().prev().find('[data-value]').attr('data-value');
+
+              var date = $el.parent().parent().find('td:nth-of-type(1)').html().split("<")[0];
+              var amount = $el.parent().parent().find('td:nth-of-type(2)').html().split("<")[0];
+
+              var $row = $el.parent().parent();
+              e.preventDefault();
+              var formData = new FormData();
+
+              var reference = $(this).attr('data-reference');
+              var name = $(this).attr('data-name');
+
+              var documentId = $(this).attr('data-document-id');
+
+              formData.set('documentId', documentId);
+              formData.set('reference', reference);
+              formData.set('name', name);
+
+              var url = window.location.pathname;
+              if (url == '/import/payroll_report')
+                var path = '/import/unmatch_payroll';
+              if (url == '/import/bank_statement')
+                var path = '/import/unmatch';
+              if (url == '/import/debit_report')
+                var path = '/import/unmatch';
+              console.log("unmatch_path :", path);
+              $.ajax({
+                url: path,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                  res = JSON.parse(res);
+                  if (res.result === false) {
+                    console.log('there was an error');
+                    return;
+                  }
+                  var data = res.data;
+                  renderTable('unmatched');
+                  renderRow('unmatched', {
+                    row: {
+                      Date: date,
+                      'Money in': amount,
+                      documentId: documentId
+                    },
+                    reference: data.match.reference,
+                    name: data.match.name,
+                    match: data.match,
+                  });
+                  typeahead();
+                  
+                  $row.remove();
+                  const totals = collectTotals();
+                  updateTotals(totals);
+                },
+              }).fail(function () {
+                console.log('there was a failure here');
+              });
+            })
+          })
+        }
+        $modal.html(modalTpl({totals: totals})).modal('show');
+      };
+
+      var updateTotals = function (totals) {
+        console.log('updating totals = ', totals);
+        $('.matched-entrants .total').html(totals.matchedEntrants);
+        if (totals.matchedEntrants > 0) {
+          $('.matched-entrants').show();
+        }
+        $('.matched-companies .total').html(totals.matchedCompanies);
+        if (totals.matchedCompanies > 0) {
+          $('.matched-companies').show();
+        }
+
+        $('.unmatched .total').html(totals.unmatched);
+        if (totals.unmatched > 0) {
+          $('.unmatched').show();
+        } else {
+          $('.unmatched').hide();
+        }
+
+        $('.ignored .total').html(totals.ignored);
+        if (totals.ignored > 0) {
+          $('.ignored').show();
+        }
+
+        $('.failed .total').html(totals.failed);
+        if (totals.failed > 0) {
+          $('.failed').show();
+        }
+
+        if (totals.unmatched === 0) {
+          $('#submitMatched').parent().show();
+        } else {
+          $('#submitMatched').parent().hide();
+        }
+      };
+
+      var collectTotals = function () {
+        let totals = {
+          matchedEntrants: $('.matched-entrants table tbody tr').length,
+          matchedCompanies: $('.matched-companies table tbody tr').length,
+        };
+        ['unmatched', 'ignored', 'failed'].forEach(function (type) {
+          totals[type] = $('.' + type + ' table tbody tr').length;
+        });
+        return totals;
+      };
+
+      var renderTable = function (type) {
+        switch (type) {
+          case 'matched-entrants':
+            if ($('.matched-entrants .card table').length === 0) {
+              $('#matchedEntrantsResults').html(matchedEntrantsTable());
+            }
+            break;
+          case 'matched-companies':
+            if ($('.matched-companies .card table').length === 0) {
+              $('#matchedCompaniesResults').html(matchedCompaniesTable());
+            }
+            break;
+          case 'unmatched':
+            if ($('.unmatched .card table').length === 0) {
+              $('#unmatchedResults').html(unmatchedTable());
+            }
+            break;
+          case 'ignored':
+            if ($('.ignored .card table').length === 0) {
+              $('#ignoredResults').html(ignoredTable());
+            }
+            break;
+          case 'failed':
+            if ($('.failed .card table').length === 0) {
+              $('#failedResults').html(failedTable());
+            }
+            break;
+        }
+      }
+
+      var renderRow = function (type, data) {
+        switch (type) {
+          case 'matched-entrants':
+            data.index = $('.matched-entrants .card table tbody tr').length;
+            if (data.match.paymentMethod == "payroll")
+              $('.matched-entrants .card table tbody').append($.parseHTML(matchedEntrantsRow_Payroll(data)));
+            else if (data.match.paymentMethod == 'direct_debit')
+              $('.matched-entrants .card table tbody').append($.parseHTML(matchedEntrantsRow_Debit(data)));      
+            else
+              $('.matched-entrants .card table tbody').append($.parseHTML(matchedEntrantsRow(data)));
+            break;
+          case 'matched-companies':
+            data.index = $('.matched-companies .card table tbody tr').length;
+            if (data.match.paymentMethod == "payroll")
+              $('.matched-companies .card table tbody').append($.parseHTML(matchedCompaniesRow_payroll(data)));
+            else
+              $('.matched-companies .card table tbody').append($.parseHTML(matchedCompaniesRow(data)));
+            break;
+          case 'unmatched':
+            var url = window.location.pathname;
+            if (url == '/import/payroll_report')
+              $('.unmatched .card table tbody').append($.parseHTML(unmatchedRow_payroll(data)));
+            else
+              $('.unmatched .card table tbody').append($.parseHTML(unmatchedRow(data)));
+            break;
+          case 'ignored':
+            $('.ignored .card table tbody').append($.parseHTML(ignoredRow(data)));
+            break;
+          case 'failed':
+            $('.failed .card table tbody').append($.parseHTML(failedRow(data)));
+            break;
+        }
+      }
+
+      var renderDrawsTable = function (type) {
+        console.log(type);
+        switch (type) {
+          case 'dates-entered':
+            $('.entered').show();
+            if ($('.entered .card table').length === 0) {
+              $('#enteredResults').html(enteredTable());
+            }
+            break;
+          case 'dates-not-entered':
+            $('.unentered').show();
+            if ($('.unentered .card table').length === 0) {
+              $('#unenteredResults').html(unenteredTable());
+            }
+            break;
+          case 'unexpected-payment':
+            $('.unexpected').show();
+            if ($('.unexpected .card table').length === 0) {
+              $('#unexpectedResults').html(unexpectedTable());
+            }
+            break;
+        }
+      };
+
+      var renderDrawsRow = function (type, data) {
+        console.log(type);
+        switch (type) {
+          case 'dates-not-entered':
+            data.index = $('.unentered .card table tbody tr').length;
+            $('.unentered .card table tbody').append($.parseHTML(unenteredRow(data)));
+            break;
+          case 'dates-entered':
+            $('.entered .card table tbody').append($.parseHTML(enteredRow(data)));
+            break;
+          case 'unexpected-payment':
+            $('.unexpected .card table tbody').append($.parseHTML(unexpectedRow(data)));
+            break;
+        }
+      }
+
+      var renderResultsTable = function (type) {
+        console.log(type);
+        switch (type) {
+          case 'successful-entries':
+            $('.successful-entries').show();
+            if ($('.successful-entries .card table').length === 0) {
+              $('#successfulEntries').html(successfulEntriesTable());
+            }
+            break;
+          case 'failed-entries':
+            $('.failed-entries').show();
+            if ($('.failed-entries .card table').length === 0) {
+              $('#failedEntries').html(failedEntriesTable());
+            }
+            break;
+        }
+      };
+
+      var renderResultsRow = function (type, data) {
+        console.log(type);
+        switch (type) {
+          case 'successful-entries':
+            data.index = $('.successful-entries .card table tbody tr').length;
+            $('.successful-entries .card table tbody').append($.parseHTML(successfulEntriesRow(data)));
+            break;
+          case 'failed-entries':
+            $('.failed-entries .card table tbody').append($.parseHTML(failedEntriesRow(data)));
+            break;
+        }
+      }
+
+      <% if (typeof wsChannel !== 'undefined') { %>
+      var channel = "<%- wsChannel -%>";
+      console.log('websockets channel = ' + channel);
+      var socket = io('http://172.17.0.1:3000');
+      socket.on(channel, function (msg) {
+        console.log(msg.data);
+        renderModal(msg.data.totals);
+        updateTotals(msg.data.totals);
+        renderTable(msg.type);
+        renderRow(msg.type, msg.data);
+      });
+      socket.on(channel + '-draws', function (msg) {
+        if (typeof msg.data.entrant !== 'undefined') {
+          msg.data.entrant = JSON.parse(msg.data.entrant);
+        }
+        if (typeof msg.data.drawEntries !== 'undefined') {
+          msg.data.drawEntries = JSON.parse(msg.data.drawEntries);
+        }
+        if (typeof msg.data.drawEntry !== 'undefined') {
+          msg.data.drawEntry = JSON.parse(msg.data.drawEntry);
+        }
+        console.log(msg);
+        renderDrawsTable(msg.type);
+        renderDrawsRow(msg.type, msg.data);
+      });
+      socket.on(channel + '-results', function (msg) {
+        if (typeof msg.data.entry !== 'undefined') {
+          msg.data.entry = JSON.parse(msg.data.entry);
+        }
+        console.log(msg);
+        renderResultsTable(msg.type);
+        renderResultsRow(msg.type, msg.data);
+      });
+      <% } %>
+
+      $('#submitMatched').on('click', function (e) {
+        e.preventDefault();
+        var data = $('#matched').serializeArray();
+        var fd = new FormData();
+        data.forEach(function (row) {
+          fd.append(row.name, row.value);
+        });
+        $('.statement-import-results').html($('<span/>').addClass('loading-spinner'));
+        $.ajax({
+          url: '/import/enter_draw',
+          type: 'POST',
+          data: fd,
+          processData: false,
+          contentType: false,
+        }).done(function(data) {
+          $('.statement-import-results').remove();
+        }).fail(function() {
+          console.log('failure here');
+        })
+      });
+
+      $('.enterEntriesIntoDraws').on('click', function(e) {
+        e.preventDefault();
+        var data = $('#unenteredResults :input').serializeArray();
+        var fd = new FormData();
+        data.forEach(function (row) {
+          fd.append(row.name, row.value);
+        });
+        $('.draw-entry').html($('<span/>').addClass('loading-spinner'));
+        $.ajax({
+          url: '/import/enter_entries_into_draws',
+          type: 'POST',
+          data: fd,
+          processData: false,
+          contentType: false,
+        }).done(function(data) {
+          $('.draw-entry').remove();
+          console.log('done');
+        }).fail(function() {
+          console.log('failure here');
+        })
+      });
+
+      $('.bank-statement-upload').on('submit', function (e){
+        e.preventDefault();
+        $this = $(this);
+        $.ajax({
+          url: '/import/bank_statement',
+          type: 'POST',
+          data: new FormData($('.bank-statement-upload')[0]),
+          processData: false,
+          contentType: false,
+        }).done(function(data) {
+          $this.replaceWith($('<span/>').addClass('loading-spinner'))
+        }).fail(function() {
+          console.log('there was a failure here');
+        });
+      });
+
+      $('.payroll-report-upload').on('submit', function (e){
+        e.preventDefault();
+        $this = $(this);
+        $.ajax({
+          url: '/import/payroll_report',
+          type: 'POST',
+          data: new FormData($('.payroll-report-upload')[0]),
+          processData: false,
+          contentType: false,
+        }).done(function(data) {
+          $this.replaceWith($('<span/>').addClass('loading-spinner'))
+        }).fail(function() {
+          console.log('there was a failure here');
+        });
+      });
+
+      $('.debit-report-upload').on('submit', function (e){
+        e.preventDefault();
+        $this = $(this);
+        $.ajax({
+          url: '/import/debit_report',
+          type: 'POST',
+          data: new FormData($('.debit-report-upload')[0]),
+          processData: false,
+          contentType: false,
+        }).done(function(data) {
+          $this.replaceWith($('<span/>').addClass('loading-spinner'))
+        }).fail(function() {
+          console.log('there was a failure here');
+        });
+      });
+
+    });
+  </script>
+<% } %>
+
+    </body>
+
+</html>

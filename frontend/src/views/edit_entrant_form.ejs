@@ -1,0 +1,186 @@
+<%- include('header') -%>
+
+
+
+<div class="row">
+    <!-- left column -->
+    <div class="col-12">
+        <!-- general form elements -->
+        <div class="card card-primary" style="margin-top:3rem;">
+            <div class="card-header">
+                <h3 class="card-title">Edit New Entrant</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" method="post" action="/draw_entrants/update">
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="companyId">Company</label>
+                        <div class="col-sm-10">
+                            <input class="typeahead form-control typeahead-companies" name="companyId" id="companyId" value="<%- company %>" />
+                            <input name="companyNumber" id="companyNumber" value="<%- companyId %>" hidden/>
+                            <input name="entrantId" id="entrantId" value="<%- id %>" hidden/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="first_name">First Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first_name" value="<%- firstName %>"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="last_name">Last Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last_name" value="<%- lastName %>"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="street1">Address Line 1</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="street1" id="street1" placeholder="street1" value="<%- street1 %>"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="street2">Address Line 2</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="street2" id="street2" placeholder="street2" value="<%- street2 %>"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="town">Town</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="town" id="town" placeholder="town" value="<%- town %>"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="county">Country</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="county" id="county" placeholder="county" value="<%- country %>"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="country_code">Country Code</label>
+                        <div class="col-sm-10">
+                            <select name="country_code" id="country_code" class="form-control">
+                                <option value="">-- select --</option>
+                                <% countries.forEach(country => {
+                                    if (country.code == countryCode ) {%>
+                                        <option value="<%- country.code %>" selected ><%- country.label %></option>
+                                    <% } else { %>
+                                        <option value="<%- country.code %>"><%- country.label %></option>
+                                <% }}); %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="postcode">Postcode</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="postcode" id="postcode" placeholder="postcode" value="<%- postcode %>"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="email">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="email" value="<%- email %>"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="phone_number">Phone Number</label>
+                        <div class="col-sm-10">
+                            <input type="tel" class="form-control" name="phone_number" id="phone_number" placeholder="phone_number" value="<%- phoneNumber %>"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="is_form_copied_and_sent_to_business">Has the form been copied and sent to the business?</label>
+                        <div class="col-sm-10">
+                            <input type="checkbox" name="is_form_copied_and_sent_to_business" id="is_form_copied_and_sent_to_business" <% if ( isFormCopiedAndSentToBusiness == 1 ) { %> checked <% } %>/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="notes">Notes</label>
+                        <div class="col-sm-10">
+                            <textarea name="notes" id="notes" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="payment_method">Payment Method</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="payment_method" id="payment_method">
+                                <option value="">-- select --</option>
+                                <% paymentMethods.forEach(element => {
+                                    if (element.code == paymentMethod ) {%>
+                                        <option value="<%- element.code %>" selected ><%- element.label %></option>
+                                    <% } else { %>
+                                        <option value="<%- element.code %>"><%- element.label %></option>
+                                <% }}); %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label" for="how_many_entries">Draw Entries List</label>
+                        <div class="col-sm-10">
+                            <ul name="draw_entries" id="draw_entries">
+                                <% drawEntries.forEach(element => { %>
+                                    <li><%- element.entryNumber %></li>
+                                <% }); %>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="add_more_entries">Add More Entries</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="add_more_entries" id="add_more_entries" placeholder="add_more_entries"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="payroll_reference">Payroll Reference</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="payroll_reference" id="payroll_reference" placeholder="payroll_reference" value="<%- payrollReference %>"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="payment_frequency">Payment Frequency</label>
+                        <div class="col-sm-10">
+                            <select name="payment_frequency" id="payment_frequency" class="form-control">
+                                <option value="">-- select --</option>
+                                <% frequencies.forEach(element => {
+                                    if ( element.code == paymentFrequency ) {%>
+                                        <option value="<%- element.code %>" selected><%- element.label %></option>
+                                    <% } else { %>
+                                        <option value="<%- element.code %>"><%- element.label %></option>
+                                <% }}); %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="balance">Balance</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" step=".01" name="balance" id="balance" value="<%- balance %>" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="is_added_to_crm">Added To CRM?</label>
+                        <div class="col-sm-10">
+                            <input type="checkbox" name="is_added_to_crm" id="is_added_to_crm" <% if ( isAddedToCrm == 1 ) { %> checked <% } %>/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="is_consent_given_to_contact_line_manager">Is Consent Given To Contact Line Manager</label>
+                        <div class="col-sm-10">
+                            <input type="checkbox" name="is_consent_given_to_contact_line_manager" id="is_consent_given_to_contact_line_manager" <% if ( isConsentGivenToContactLineManager == 1 ) { %> checked <% } %> />
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+<%- include('footer') -%>

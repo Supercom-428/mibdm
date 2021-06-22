@@ -1,0 +1,11 @@
+{
+  "development": {
+    "username": "root",
+    "password": "root_password_not_secret",
+    "database": "mib",
+    "host": "mib-backend-db",
+    "dialect": "mysql",
+    "operatorsAliases": false,
+    "logging": false
+  }
+}

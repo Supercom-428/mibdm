@@ -1,0 +1,166 @@
+<%- include('header') -%>
+
+<section class="content">
+    <div class="mt-5"></div>
+    <div class="row upload">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="bank-statement-upload">
+                        <div class="form-group">
+                            <label for="file">Bank File:</label>
+                            <input type="file" class="form-control-file" id="file" name="file">
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2 upload">Upload</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row statement-import-results">
+        <form id="matched">
+            <div class="col-12 matched-entrants">
+                <div class="card card-body">
+                    <h5 class="card-title">
+                        Matched Entrants <span class="badge badge-info total"></span>
+                        <button class="btn btn-xs btn-outline-secondary" type="button" data-toggle="collapse" data-target="#matchedEntrantsResults" aria-expanded="false" aria-controls="matchedEntrantsResults">
+                            Toggle
+                        </button>
+                    </h5>
+                    <div class="collapse" id="matchedEntrantsResults">
+                        <div class="card card-body"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 matched-companies">
+            <div class="card card-body">
+                <h5 class="card-title">
+                    Matched Companies <span class="badge badge-info total"></span>
+                    <button class="btn btn-xs btn-outline-secondary" type="button" data-toggle="collapse" data-target="#matchedCompaniesResults" aria-expanded="false" aria-controls="matchedCompaniesResults">
+                        Toggle
+                    </button>
+                </h5>
+                <div class="collapse" id="matchedCompaniesResults">
+                    <div class="card card-body"></div>
+                </div>
+            </div>
+        </div>
+            <div class="form-group" style="display: none;">
+                <button type="submit" class="btn btn-primary" id="submitMatched">Enter Into Draws</button>
+            </div>
+        </form>
+        <div class="col-12 unmatched">
+            <div class="card card-body">
+                <h5 class="card-title">
+                    Unmatched <span class="badge badge-info total"></span>
+                    <button class="btn btn-xs btn-outline-secondary" type="button" data-toggle="collapse" data-target="#unmatchedResults" aria-expanded="false" aria-controls="unmatchedResults">
+                        Toggle
+                    </button>
+                </h5>
+                <div class="collapse" id="unmatchedResults">
+                    <div class="card card-body"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 ignored">
+            <div class="card card-body">
+                <h5 class="card-title">
+                    Ignored <span class="badge badge-info total"></span>
+                    <button class="btn btn-xs btn-outline-secondary" type="button" data-toggle="collapse" data-target="#ignoredResults" aria-expanded="false" aria-controls="ignoredResults">
+                        Toggle
+                    </button>
+                </h5>
+                <div class="collapse" id="ignoredResults">
+                    <div class="card card-body"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 failed">
+            <div class="card card-body">
+                <h5 class="card-title">
+                    Failed <span class="badge badge-info total"></span>
+                    <button class="btn btn-xs btn-outline-secondary" type="button" data-toggle="collapse" data-target="#failedResults" aria-expanded="false" aria-controls="failedResults">
+                        Toggle
+                    </button>
+                </h5>
+                <div class="collapse" id="failedResults">
+                    <div class="card card-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row draw-entry">
+        <div class="col-12 unentered">
+            <div class="card card-body">
+                <h5 class="card-title">
+                    Entries to be added to draws
+                    <button class="btn btn-xs btn-outline-secondary" type="button" data-toggle="collapse" data-target="#unenteredResults" aria-expanded="false" aria-controls="unenteredResults">
+                        Toggle
+                    </button>
+                    <button class="btn btn-xs btn-outline-primary enterEntriesIntoDraws" type="button">
+                        Enter Into Draws
+                    </button>
+                </h5>
+                <div class="collapse" id="unenteredResults">
+                    <div class="card card-body"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 entered">
+            <div class="card card-body">
+                <h5 class="card-title">
+                    Entries already added to draws
+                    <button class="btn btn-xs btn-outline-secondary" type="button" data-toggle="collapse" data-target="#enteredResults" aria-expanded="false" aria-controls="enteredResults">
+                        Toggle
+                    </button>
+                </h5>
+                <div class="collapse" id="enteredResults">
+                    <div class="card card-body"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 unexpected">
+            <div class="card card-body">
+                <h5 class="card-title">
+                    Payments we couldn't process
+                    <button class="btn btn-xs btn-outline-secondary" type="button" data-toggle="collapse" data-target="#unexpectedResults" aria-expanded="false" aria-controls="unexpectedResults">
+                        Toggle
+                    </button>
+                </h5>
+                <div class="collapse" id="unexpectedResults">
+                    <div class="card card-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row final-results">
+        <div class="col-12 successful-entries">
+            <div class="card card-body">
+                <h5 class="card-title">
+                    Successfully entered draw numbers
+                    <button class="btn btn-xs btn-outline-secondary" type="button" data-toggle="collapse" data-target="#successfulEntries" aria-expanded="false" aria-controls="successfulEntries">
+                        Toggle
+                    </button>
+                </h5>
+                <div class="collapse" id="successfulEntries">
+                    <div class="card card-body"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 failed-entries">
+            <div class="card card-body">
+                <h5 class="card-title">
+                    Draw numbers that we failed to enter
+                    <button class="btn btn-xs btn-outline-secondary" type="button" data-toggle="collapse" data-target="#failedEntries" aria-expanded="false" aria-controls="failedEntries">
+                        Toggle
+                    </button>
+                </h5>
+                <div class="collapse" id="failedEntries">
+                    <div class="card card-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('footer') -%>
